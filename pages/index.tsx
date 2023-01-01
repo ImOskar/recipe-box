@@ -1,10 +1,41 @@
 import Head from "next/head";
 import Image from "next/image";
+import backgroundImage from "../public/pexels-ella-olsson-1640774.jpg";
+import { Fragment, useState } from "react";
+import RecipeList from "../components/recipes/RecipeList";
+import { Recipe } from "./add-recipe";
 import styles from "../styles/Home.module.css";
+import RecipeFilter from "../components/recipes/RecipeFilter";
+import Link from "next/link";
+
+import { RECIPE_LIST } from "../components/recipes/RECIPE_LIST";
+import Logo from "../components/ui/Logo";
+import Button from "../components/ui/Button";
+
+type Filter = "" | "Breakfast" | "Lunch" | "Dinner";
 
 export default function Home() {
+  const recipes = RECIPE_LIST;
+
+  const [query, setQuery] = useState("");
+  const [filter, setFilter] = useState("");
+
+  const handleSearch = (query: string) => {
+    setQuery(query);
+  };
+
+  const handleFilter = (filter: Filter) => {
+    setFilter(filter);
+  };
+
+  const displayFiltered = (items: Recipe[]) => {
+    return items.filter((recipe) => {
+      return recipe.title.toLowerCase().indexOf(query.toLowerCase()) !== -1;
+    });
+  };
+
   return (
-    <div className={styles.container}>
+    <Fragment>
       <Head>
         <title>Recipe Box</title>
         <meta
@@ -13,62 +44,26 @@ export default function Home() {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{" "}
-          <code className={styles.code}>pages/index.tsx</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className={styles.card}
-          >
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+      <section className={styles.splashcontainer}>
+        <Image
+          className={styles.splashimage}
+          src={backgroundImage}
+          alt="Splash image"
+          priority
+          fill
+        />
+        <div className={styles.splashtextcontainer}>
+          <div className={styles.splashlogo}>
+            <Logo size="splash" />
+          </div>
+          <p className={styles.splashtext}>All your recipes in one place</p>
+          <Link href="/register">
+            <Button addStyle={["signup", "lrg"]}>Sign up</Button>
+          </Link>
         </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{" "}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer>
-    </div>
+      </section>
+      <RecipeFilter handler={handleSearch} />
+      <RecipeList recipes={displayFiltered(recipes)} />
+    </Fragment>
   );
 }

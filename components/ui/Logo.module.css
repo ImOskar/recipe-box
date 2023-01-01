@@ -1,0 +1,39 @@
+.logo {
+  display: flex;
+  color: inherit;
+  user-select: none;
+  font-size: inherit;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.logo i {
+  font-size: inherit;
+  color: inherit;
+  align-self: center;
+}
+
+.small {
+  font-size: var(--s);
+}
+
+.medium {
+  font-size: var(--m);
+}
+
+.large {
+  font-size: var(--l);
+}
+
+.xlarge {
+  font-size: var(--xl);
+}
+
+.splash {
+  flex-direction: column;
+  font-size: 250px;
+}
+
+.splash p {
+  font-size: var(--xxl);
+}

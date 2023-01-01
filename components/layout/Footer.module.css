@@ -1,0 +1,13 @@
+.footer {
+  display: flex;
+  flex: 1;
+  padding: 2rem 0;
+  background: #4682b4;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo {
+  color: var(--white);
+  font-size: var(--xl);
+}

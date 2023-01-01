@@ -1,0 +1,74 @@
+.button {
+  border-radius: 4px;
+  background-color: var(--blue);
+  height: 45px;
+  padding: 12px;
+  width: 260px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  margin: 20px auto;
+}
+
+.sm {
+  height: 50px;
+  width: 50px;
+}
+
+.med {
+  height: 45px;
+  width: 150px;
+}
+
+.lrg {
+  height: 45px;
+  width: 250px;
+}
+
+.signup {
+  background-color: var(--orange);
+}
+
+.lightgrey {
+  background-color: rgb(0 0 0 / 10%);
+}
+
+.edit {
+  color: #44f34c;
+}
+
+.alert {
+  color: #ff2d49;
+}
+
+.alert,
+.edit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.primary:hover {
+  background-color: #3a6dd8;
+}
+
+.edit:hover {
+  background-color: #44f34c;
+  color: #fff;
+}
+
+.lightgrey:hover {
+  background-color: #bababa;
+}
+
+.alert:hover {
+  background-color: #ff2d49;
+  color: #fff;
+}
+
+.button:disabled {
+  background-color: #858585;
+}

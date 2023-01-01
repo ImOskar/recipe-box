@@ -1,0 +1,27 @@
+.modalwrapper {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #ffff;
+  color: #000000;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.header {
+  font-size: var(--xl);
+  margin-bottom: 2rem;
+}
+
+.buttons {
+  display: flex;
+  width: 30%;
+  margin: 0 auto;
+}
+
+@media only screen and (max-width: 700px) {
+  .buttons {
+    width: 100%;
+  }
+}
