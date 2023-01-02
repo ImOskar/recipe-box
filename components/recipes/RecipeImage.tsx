@@ -1,6 +1,7 @@
-import { Dispatch, SetStateAction, useRef } from "react";
+import { Dispatch, SetStateAction, useRef, useState } from "react";
 import Button from "../ui/Button";
 import styles from "./RecipeImage.module.css";
+import { useS3Upload } from "next-s3-upload";
 
 type ImageProps = {
   image: string;
@@ -9,25 +10,30 @@ type ImageProps = {
 
 function RecipeImage({ image, setImage }: ImageProps) {
   const photoRef = useRef<HTMLInputElement>(null);
+  const [uploading, setUploading] = useState(false);
+  let { uploadToS3 } = useS3Upload();
 
   const handleAddImage = () => {
     photoRef.current?.click();
-    // if(photoRef.current !== null) {
-    //   let file = photoRef.current.files!;
-    //   file[0].name;
-    // }
   };
 
-  const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files || e.target.files.length === 0) {
-      return;
-    }
-    const file = e.target.files[0];
+  const handleFileInput = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]!;
     const preview = URL.createObjectURL(file);
-    console.log(file);
     setImage(preview);
-    //const imageUrl = await uploadImage...
-    //setImage(imageUrl);
+    uploadImageToS3(file);
+  };
+
+  const uploadImageToS3 = async (image: File) => {
+    setUploading(true);
+    try {
+      let { url } = await uploadToS3(image);
+      setImage(url);
+      setUploading(false);
+    } catch (error) {
+      console.log(error);
+      setUploading(false);
+    }
   };
 
   return (
@@ -43,6 +49,7 @@ function RecipeImage({ image, setImage }: ImageProps) {
       <Button
         addStyle={["med", "lightgrey"]}
         onClick={handleAddImage}
+        loading={uploading}
         type="button"
       >
         <i className="material-icons">add_a_photo</i>

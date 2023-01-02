@@ -48,6 +48,7 @@ export default function Home() {
         <Image
           className={styles.splashimage}
           src={backgroundImage}
+          //https://recipe-images.s3.eu-west-1.amazonaws.com/pexels-ella-olsson-1640774.jpg//
           alt="Splash image"
           priority
           fill
