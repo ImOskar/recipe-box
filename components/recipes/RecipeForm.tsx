@@ -79,7 +79,7 @@ function RecipeForm({
           onChange={handleChange}
           defaultValue={checkValues(values?.title)}
           required
-        ></input>
+        />
         <label>Title</label>
       </div>
       <div className={styles.box}>
@@ -90,7 +90,7 @@ function RecipeForm({
           onChange={handleChange}
           defaultValue={checkValues(values?.description)}
           required
-        ></input>
+        />
         <label>Description</label>
       </div>
       <div className={styles.box}>
@@ -101,7 +101,7 @@ function RecipeForm({
           defaultValue={edit ? checkValues(values?.ingredients) : ""}
           rows={15}
           required
-        ></textarea>
+        />
         <label>Ingredients</label>
       </div>
       <div className={styles.box}>
@@ -111,7 +111,7 @@ function RecipeForm({
           onChange={handleChange}
           defaultValue={edit ? checkValues(values?.steps) : ""}
           rows={15}
-        ></textarea>
+        />
         <label>Instructions</label>
       </div>
       <div>
