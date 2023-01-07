@@ -1,13 +1,35 @@
 import RecipeList from "../../components/recipes/RecipeList";
+import { getRecipeCollection } from "../../lib/mongodb";
+import { Recipe } from "../add-recipe";
 
-import { RECIPE_LIST } from "../../components/recipes/RECIPE_LIST";
+type ExploreProps = {
+  recipes: Recipe[];
+};
 
-function Explore() {
+function Explore({ recipes }: ExploreProps) {
   return (
     <section>
-      <RecipeList recipes={RECIPE_LIST} />
+      <RecipeList recipes={recipes} />
     </section>
   );
 }
 
 export default Explore;
+
+export async function getStaticProps() {
+  const recipeCollection = await getRecipeCollection();
+  let recipes = await recipeCollection.find().toArray();
+  return {
+    props: {
+      recipes: recipes.map((recipe) => ({
+        id: recipe._id.toString(),
+        title: recipe.title,
+        description: recipe.description,
+        ingredients: recipe.ingredients,
+        steps: recipe.steps,
+        image: recipe.image,
+      })),
+    },
+    revalidate: 1,
+  };
+}

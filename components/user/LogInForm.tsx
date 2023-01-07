@@ -27,7 +27,7 @@ function LogInForm() {
           required
           value={user.username}
           onChange={handleInputChange}
-        ></input>
+        />
         <label htmlFor="username">Username</label>
       </div>
       <div className={styles.box}>
@@ -37,7 +37,7 @@ function LogInForm() {
           required
           value={user.password}
           onChange={handleInputChange}
-        ></input>
+        />
         <label htmlFor="password">Password</label>
       </div>
       <Button type="submit">Log in</Button>

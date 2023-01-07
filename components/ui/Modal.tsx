@@ -4,7 +4,7 @@ import Button from "./Button";
 import styles from "./Modal.module.css";
 
 type ModalProps = {
-  deleteHandler: () => void;
+  deleteHandler: () => Promise<void>;
   hideModal: Dispatch<SetStateAction<boolean>>;
 };
 

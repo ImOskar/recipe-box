@@ -7,13 +7,21 @@
 }
 
 .image {
-  width: 300px;
+  object-fit: cover;
 }
 
 .description {
   color: var(--grey);
+  -webkit-line-clamp: 3;
 }
 
-.text {
-  /* padding-bottom: 4rem; */
+.text h4,
+.description {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.text h4 {
+  -webkit-line-clamp: 1;
 }

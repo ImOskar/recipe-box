@@ -37,7 +37,7 @@ function SignUpForm() {
           required
           value={user.email}
           onChange={handleInputChange}
-        ></input>
+        />
         <label>Email</label>
       </div>
       <div className={styles.box}>
@@ -47,7 +47,7 @@ function SignUpForm() {
           required
           value={user.username}
           onChange={handleInputChange}
-        ></input>
+        />
         <label>Username</label>
       </div>
       <div className={styles.box}>
@@ -57,7 +57,7 @@ function SignUpForm() {
           required
           value={user.password}
           onChange={handleInputChange}
-        ></input>
+        />
         <label>Password</label>
       </div>
       <div className={styles.box}>
@@ -67,7 +67,7 @@ function SignUpForm() {
           required
           value={user.verifyPassword}
           onChange={handleInputChange}
-        ></input>
+        />
         <label>Verify password</label>
       </div>
       {error && <p className={styles.error}>Password does not match</p>}

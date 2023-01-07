@@ -5,39 +5,51 @@ import { Recipe } from "../../pages/add-recipe";
 import Button from "../ui/Button";
 import Modal from "../ui/Modal";
 import styles from "./RecipeDetail.module.css";
+import fallbackImage from "../../public/pexels-ella-olsson-1640774.jpg";
 
 type DetailProps = {
   recipe: Recipe;
+  handleDelete: () => Promise<void>;
 };
 
-function RecipeDetail({ recipe }: DetailProps) {
+function RecipeDetail({ recipe, handleDelete }: DetailProps) {
   const [showModal, setShowModal] = useState(false);
   const router = useRouter();
 
-  const handleDelete = () => {
-    console.log("Deleted recipe: " + recipe.id);
-    setShowModal(false);
-  };
+  // const handleDelete = () => {
+  //   console.log("Deleted recipe: " + recipe.id);
+  //   setShowModal(false);
+  // };
 
   const handleEdit = () => {
-    router.push(
-      {
-        pathname: "/edit-recipe",
-        query: recipe,
-      },
-      "/edit-recipe"
-    );
+    router.push(`/edit-recipe/${recipe.id}`);
   };
+
+  const image = typeof recipe.image !== "undefined" && recipe.image !== "";
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.recipeheader}>
         <h1>{recipe.title}</h1>
+        <span></span>
         <h3>By: Yotem Ottolenghi</h3>
       </div>
       <span className={styles.image}>
-        {/* <Image src={recipe.image} alt="Recipe image" width={350}  /> */}
-        <img src={recipe.image} alt="Recipe image" width={350} />
+        {image ? (
+          <Image
+            src={recipe.image!}
+            alt="Recipe image"
+            width={1200}
+            height={300}
+          />
+        ) : (
+          <Image
+            src={fallbackImage}
+            alt="Recipe image"
+            width={1200}
+            height={300}
+          />
+        )}
       </span>
       <div className={styles.recipedetails}>
         <i className="material-icons">favorite_border</i>

@@ -2,24 +2,37 @@ import { useRouter } from "next/router";
 import RecipeForm from "../../components/recipes/RecipeForm";
 
 export type Recipe = {
-  id: number;
+  id: string;
   title: string;
   description?: string;
   image?: string;
   steps: string[];
   ingredients: string[];
-  // category?: string;
-  // video?: string;
-  // time?: string;
-  // author?: string;
-  // userId: string:
+  cookTime?: string;
+  prepTime?: string;
+  totalTime?: string;
+  recipeYield?: number | string;
+  recipeCategories?: string[];
+  keywords?: string[];
+  url?: string;
+  userId?: string;
+  author?: string;
 };
 
 function AddRecipePage() {
   const router = useRouter();
 
-  const handleAddRecipe = (recipeData: Recipe) => {
-    console.log(recipeData);
+  const handleAddRecipe = async (recipeData: Recipe) => {
+    try {
+      const res = await fetch("/api/recipes", {
+        method: "POST",
+        body: JSON.stringify(recipeData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      let result = await res.json();
+    } catch (error) {}
     router.push("./");
   };
 

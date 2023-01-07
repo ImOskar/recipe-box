@@ -1,6 +1,6 @@
 export const RECIPE_LIST = [
   {
-    id: 1,
+    id: "1",
     title: "Shakshuka (North African–Style Poached Eggs in Spicy Tomato Sauce)",
     description:
       "Vegetarian shakshuka is a one-pan egg and tomato dish perfect for breakfast, lunch, or dinner.",
@@ -28,7 +28,7 @@ export const RECIPE_LIST = [
     ],
   },
   {
-    id: 2,
+    id: "2",
     title: "Tortang Talong (Filipino Eggplant Omelette)",
     description:
       "Crispy, succulent egg-battered fried eggplant stuffed with seasoned ground pork.",
@@ -56,7 +56,7 @@ export const RECIPE_LIST = [
     ],
   },
   {
-    id: 3,
+    id: "3",
     title: "Harissa (Armenian Wheat and Chicken Porridge)",
     description:
       "A porridge that's far more than the sum of its parts, with a little assist from spiced brown butter.",
@@ -84,7 +84,7 @@ export const RECIPE_LIST = [
     ],
   },
   {
-    id: 4,
+    id: "4",
     title: "Golfeados (Venezuelan Sticky Buns)",
     description:
       "Vegetarian shakshuka is a one-pan egg and tomato dish perfect for breakfast, lunch, or dinner.",
@@ -112,7 +112,7 @@ export const RECIPE_LIST = [
     ],
   },
   {
-    id: 5,
+    id: "5",
     title: "Jammy Fruit Bars Recipe",
     description:
       "A perfect vehicle for market-fresh blueberries, cherries, and peaches in season, or your favorite jam during those times in between.",
@@ -140,7 +140,7 @@ export const RECIPE_LIST = [
     ],
   },
   {
-    id: 6,
+    id: "6",
     title: "Creamy Whipped Greek Yogurt",
     description: "A light and fresh summer dessert.",
     image:
@@ -167,7 +167,7 @@ export const RECIPE_LIST = [
     ],
   },
   {
-    id: 7,
+    id: "7",
     title: "Classic French Omelette",
     description:
       "Our goal: an enveloping sheet of tender egg cradling a soft-scrambled interior.",
@@ -195,7 +195,7 @@ export const RECIPE_LIST = [
     ],
   },
   {
-    id: 8,
+    id: "8",
     title: "Broccoli and Cheese Galette",
     description:
       "The secret to this creamy vegetable tart is Mornay sauce, the same cheese sauce used for a traditional mac and cheese.",
@@ -223,7 +223,7 @@ export const RECIPE_LIST = [
     ],
   },
   {
-    id: 9,
+    id: "9",
     title: "Pistachio Buns",
     description:
       "A make-ahead breakfast treat that pulls all the stops for pistachio lovers.",
@@ -251,7 +251,7 @@ export const RECIPE_LIST = [
     ],
   },
   {
-    id: 10,
+    id: "10",
     title: "Japanese-Style Salted Salmon (Shiozake) ",
     description: "",
     image:
