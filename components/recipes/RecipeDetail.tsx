@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { useSession } from "next-auth/react";
 import { Recipe } from "../../pages/add-recipe";
 import Button from "../ui/Button";
 import Modal from "../ui/Modal";
@@ -13,19 +14,18 @@ type DetailProps = {
 };
 
 function RecipeDetail({ recipe, handleDelete }: DetailProps) {
+  const { data: session } = useSession();
   const [showModal, setShowModal] = useState(false);
   const router = useRouter();
-
-  // const handleDelete = () => {
-  //   console.log("Deleted recipe: " + recipe.id);
-  //   setShowModal(false);
-  // };
 
   const handleEdit = () => {
     router.push(`/edit-recipe/${recipe.id}`);
   };
 
-  const image = typeof recipe.image !== "undefined" && recipe.image !== "";
+  const image =
+    typeof recipe.image !== "undefined" &&
+    recipe.image !== "" &&
+    "image" in recipe;
 
   return (
     <div className={styles.wrapper}>
@@ -35,21 +35,12 @@ function RecipeDetail({ recipe, handleDelete }: DetailProps) {
         <h3>By: Yotem Ottolenghi</h3>
       </div>
       <span className={styles.image}>
-        {image ? (
-          <Image
-            src={recipe.image!}
-            alt="Recipe image"
-            width={1200}
-            height={300}
-          />
-        ) : (
-          <Image
-            src={fallbackImage}
-            alt="Recipe image"
-            width={1200}
-            height={300}
-          />
-        )}
+        <Image
+          src={image ? recipe.image! : fallbackImage}
+          alt="Recipe image"
+          fill
+          //placeholder="blur"
+        />
       </span>
       <div className={styles.recipedetails}>
         <i className="material-icons">favorite_border</i>
@@ -66,22 +57,24 @@ function RecipeDetail({ recipe, handleDelete }: DetailProps) {
             <li key={i}>{step}</li>
           ))}
         </ul>
-        <span className={styles.buttons}>
-          <Button addStyle={["med", "edit"]} onClick={handleEdit}>
-            <i className="material-icons">edit_note</i>
-            Edit recipe
-          </Button>
-          <Button
-            addStyle={["med", "alert"]}
-            onClick={() => setShowModal(true)}
-          >
-            <i className="material-icons">delete</i>
-            Delete recipe
-          </Button>
-          {showModal && (
-            <Modal deleteHandler={handleDelete} hideModal={setShowModal} />
-          )}
-        </span>
+        {session?.user.id === recipe.userId && (
+          <span className={styles.buttons}>
+            <Button addStyle={["med", "edit"]} onClick={handleEdit}>
+              <i className="material-icons">edit_note</i>
+              Edit recipe
+            </Button>
+            <Button
+              addStyle={["med", "alert"]}
+              onClick={() => setShowModal(true)}
+            >
+              <i className="material-icons">delete</i>
+              Delete recipe
+            </Button>
+            {showModal && (
+              <Modal deleteHandler={handleDelete} hideModal={setShowModal} />
+            )}
+          </span>
+        )}
       </div>
     </div>
   );

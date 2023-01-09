@@ -5,16 +5,17 @@ import styles from "./RecipeCard.module.css";
 import fallback from "../../public/pexels-ella-olsson-1640774.jpg";
 
 function RecipeCard(recipe: Recipe) {
+  const hasOwnImage =
+    typeof recipe.image !== "undefined" &&
+    recipe.image !== "" &&
+    "image" in recipe;
+
   return (
     <div className={styles.card}>
       <Link href={"/recipe/" + recipe.id}>
         <span>
           <Image
-            src={
-              recipe.image !== "" && typeof recipe.image !== "undefined"
-                ? recipe.image
-                : fallback
-            }
+            src={hasOwnImage ? recipe.image! : fallback}
             alt="Recipe image"
             width={300}
             height={170}

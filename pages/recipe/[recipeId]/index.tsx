@@ -28,7 +28,7 @@ function RecipeDetailPage({ recipe }: DetailProps) {
       let result = await res.json();
     } catch (error) {}
     setDeleting(false);
-    router.push("./");
+    router.push("/");
   };
 
   return (

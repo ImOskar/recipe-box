@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useState } from "react";
 import { Recipe } from "../../pages/add-recipe/index";
 import Button from "../ui/Button";
 import FormLayout from "../ui/FormLayout";
@@ -34,12 +34,7 @@ function RecipeForm({
   edit,
   values = initialValues,
 }: FormProps) {
-  const [image, setImage] = useState(values.image!);
   const [recipe, setRecipe] = useState<Recipe>(values);
-
-  // useEffect(() => {
-  //   if (typeof recipe.image !== "undefined") setImage(recipe.image);
-  // }, []);
 
   const handleChange = (
     e:
@@ -103,7 +98,7 @@ function RecipeForm({
         <label>Instructions</label>
       </div>
       <p className={styles.subtitle}>Recipe details (optional):</p>
-      <RecipeImage image={image} setImage={setImage} />
+      <RecipeImage recipe={recipe} setImage={setRecipe} />
       <div className={styles.box}>
         <input
           className={styles.input}
@@ -163,8 +158,8 @@ function RecipeForm({
       </div>
 
       <div className={styles.box}>
-        recipeCategories?: string[]; keywords?: string[]; url?: string; userId?:
-        string; author?: string;
+        recipeCategories?: string[]; keywords?: string[]; url?: string; author?:
+        string;
       </div>
       <div>
         <Button type="submit">Save Recipe</Button>

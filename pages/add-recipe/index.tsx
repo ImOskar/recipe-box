@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 import RecipeForm from "../../components/recipes/RecipeForm";
 
 export type Recipe = {
@@ -20,9 +21,12 @@ export type Recipe = {
 };
 
 function AddRecipePage() {
+  const { data: session } = useSession();
   const router = useRouter();
 
   const handleAddRecipe = async (recipeData: Recipe) => {
+    console.log("SESSIONADD_RECIPE: " + session);
+    recipeData.userId = session?.user.id;
     try {
       const res = await fetch("/api/recipes", {
         method: "POST",
@@ -33,7 +37,7 @@ function AddRecipePage() {
       });
       let result = await res.json();
     } catch (error) {}
-    router.push("./");
+    router.push("/");
   };
 
   return (

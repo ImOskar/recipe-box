@@ -1,14 +1,25 @@
 import React, { useState } from "react";
+import { signIn } from "next-auth/react";
 import Button from "../ui/Button";
 import FormLayout from "../ui/FormLayout";
 import styles from "./../ui/FormLayout.module.css";
+import Router from "next/router";
 
 function LogInForm() {
-  const [user, setUser] = useState({ username: "", password: "" });
+  const [user, setUser] = useState({ email: "", password: "" });
+  const [message, setMessage] = useState("");
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(user);
+    const status = await signIn("credentials", {
+      redirect: false,
+      email: user.email,
+      password: user.password,
+    });
+    console.log("loginform" + status);
+    if (status?.ok) {
+      Router.push("/");
+    } else if (typeof status?.error !== "undefined") setMessage(status?.error);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,13 +33,13 @@ function LogInForm() {
       <p className={styles.title}>Log in to your account</p>
       <div className={styles.box}>
         <input
-          name="username"
-          type="text"
+          name="email"
+          type="email"
           required
-          value={user.username}
+          value={user.email}
           onChange={handleInputChange}
         />
-        <label htmlFor="username">Username</label>
+        <label htmlFor="email">Email</label>
       </div>
       <div className={styles.box}>
         <input
@@ -40,6 +51,7 @@ function LogInForm() {
         />
         <label htmlFor="password">Password</label>
       </div>
+      <p className={styles.message}>{message}</p>
       <Button type="submit">Log in</Button>
     </FormLayout>
   );

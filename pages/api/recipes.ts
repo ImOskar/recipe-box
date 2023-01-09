@@ -1,22 +1,19 @@
 import { getRecipeCollection } from "../../lib/mongodb";
 import { ObjectId } from "mongodb";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { Recipe } from "../add-recipe";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   const recipeCollection = await getRecipeCollection();
-  //let data: Recipe = req.body;
   let data = req.body;
 
   switch (req.method) {
     case "POST":
       try {
         let result = await recipeCollection.insertOne(data);
-        console.log("ADDED: " + result);
-        res.status(201).json({ message: "Recipe inserted" });
+        res.status(201).json({ message: "Recipe inserted", ...result });
       } catch (error) {}
       break;
     case "PUT":
@@ -25,8 +22,7 @@ export default async function handler(
           { _id: new ObjectId(data.id) },
           data
         );
-        console.log("EDITED: " + result);
-        res.status(201).json({ message: "Recipe replaced" });
+        res.status(201).json({ message: "Recipe replaced", ...result });
       } catch (error) {}
       break;
     case "DELETE":
@@ -34,17 +30,22 @@ export default async function handler(
         let result = await recipeCollection.deleteOne({
           _id: new ObjectId(data),
         });
-        res.status(201).json({ message: "Recipe deleted" });
+        res.status(201).json({ message: "Recipe deleted", ...result });
       } catch (error) {}
       break;
-    case "INSERTMANY":
+    case "LIKE":
       try {
-        let result = await recipeCollection.insertMany(data);
-        console.log("ADDED: " + result);
-        res.status(201).json({ message: "Recipe inserted" });
+        let result = await recipeCollection.updateOne(
+          { _id: new ObjectId(data) },
+          {
+            //
+          }
+        );
+        console.log("LIKED: " + result);
+        res.status(201).json({ message: "Recipe liked", ...result });
       } catch (error) {}
       break;
     default:
-      res.status(405).json({ message: "What happened?" });
+      res.status(405).end();
   }
 }

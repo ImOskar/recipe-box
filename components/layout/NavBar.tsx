@@ -1,15 +1,15 @@
 import Link from "next/link";
+import { useSession, signOut } from "next-auth/react";
 import styles from "./NavBar.module.css";
 import { useRef, useState } from "react";
 import useOnClickOutside from "../../hooks/useOnClickOutside";
 import Logo from "../ui/Logo";
 
 function NavBar() {
+  const { data: session } = useSession();
   const [isOpen, setIsOpen] = useState(false);
   const clickRef = useRef<HTMLElement>(null);
   useOnClickOutside({ ref: clickRef, callback: setIsOpen });
-
-  const isLoggedIn = true; //placeholder for user logic
 
   return (
     <header className={styles.header} ref={clickRef}>
@@ -24,22 +24,33 @@ function NavBar() {
             <i className="material-icons">menu</i>
           )}
         </span>
-        <nav className={isOpen ? styles.nav : styles.navclosed}>
-          <Link href="/explore" onClick={() => setIsOpen(false)}>
+        <nav
+          className={isOpen ? styles.nav : styles.navclosed}
+          onClick={() => setIsOpen(false)}
+        >
+          <Link href="/explore">
             <span>Explore</span>
           </Link>
-          {!isLoggedIn ? (
-            <Link href="/log-in" onClick={() => setIsOpen(false)}>
+          {!session ? (
+            <Link href="/log-in">
               <span>Sign in</span>
             </Link>
           ) : (
             <>
-              <Link href="/my-recipes" onClick={() => setIsOpen(false)}>
+              <Link href="/my-recipes">
                 <span>My recipes</span>
               </Link>
-              <Link href="/add-recipe" onClick={() => setIsOpen(false)}>
+              <Link href="/add-recipe">
                 <span>Add Recipe</span>
               </Link>
+              <span
+                className={styles.signout}
+                onClick={() =>
+                  signOut({ callbackUrl: "http://localhost:3000/" })
+                }
+              >
+                Sign out
+              </span>
             </>
           )}
         </nav>

@@ -20,15 +20,29 @@
   margin: -1rem 0 -1.1rem;
 }
 
-.container nav > a > span {
+.container nav span {
   padding: 0.5rem;
 }
 
+/* .container nav span:hover {
+  border: 1px solid var(--orange);
+} */
+
 .menu {
   display: none;
+  cursor: pointer;
 }
 
-@media (max-width: 500px) {
+.navclosed {
+  display: flex;
+  align-items: center;
+}
+
+.signout {
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
   .menu {
     display: flex;
   }

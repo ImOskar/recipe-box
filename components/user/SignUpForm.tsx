@@ -1,15 +1,18 @@
+import router from "next/router";
 import React, { useState } from "react";
+import { signIn } from "next-auth/react";
+import { User } from "../../pages/register";
 import Button from "../ui/Button";
 import FormLayout from "../ui/FormLayout";
 import styles from "./../ui/FormLayout.module.css";
 
 function SignUpForm() {
-  const [error, setError] = useState(false);
-  const [user, setUser] = useState({
+  const [message, setMessage] = useState("");
+  const [verifyPassword, setVerifyPassword] = useState("");
+  const [user, setUser] = useState<User>({
     username: "",
     email: "",
     password: "",
-    verifyPassword: "",
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -18,13 +21,33 @@ function SignUpForm() {
     setUser({ ...user, [name]: value });
   };
 
-  const handleRegister = (e: React.FormEvent) => {
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (user.password !== user.verifyPassword) {
-      setError(true);
+    setMessage("");
+    if (user.password !== verifyPassword) {
+      setMessage("Passwords don't match");
       return;
     }
-    console.log(user);
+    try {
+      const res = await fetch("/api/auth/register", {
+        method: "POST",
+        body: JSON.stringify(user),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      let result = await res.json();
+      if (result.message) {
+        setMessage(result.message);
+      }
+      if (result.message == "success") {
+        let { email, password } = user;
+        let options = { redirect: false, email, password };
+        const res = await signIn("credentials", options);
+        console.log("SIGNIN SIGNUPPAGE: " + res);
+        router.push("/");
+      }
+    } catch (error) {}
   };
 
   return (
@@ -65,12 +88,12 @@ function SignUpForm() {
           name="verifyPassword"
           type="password"
           required
-          value={user.verifyPassword}
-          onChange={handleInputChange}
+          value={verifyPassword}
+          onChange={(e) => setVerifyPassword(e.target.value)}
         />
         <label>Verify password</label>
       </div>
-      {error && <p className={styles.error}>Password does not match</p>}
+      <p className={styles.message}>{message}</p>
       <Button type="submit">Register</Button>
     </FormLayout>
   );

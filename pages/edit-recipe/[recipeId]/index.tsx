@@ -23,7 +23,7 @@ function EditRecipe({ recipe }: EditProps) {
       });
       let result = await res.json();
     } catch (error) {}
-    router.push(`./`);
+    router.push(`/`);
   };
 
   return (
@@ -52,17 +52,13 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
   const id = params?.recipeId as string;
   const recipeCollection = await getRecipeCollection();
   let recipe = await recipeCollection.findOne({ _id: new ObjectId(id) });
+  let res = { ...recipe };
+  res.id = recipe?._id.toString();
+  delete res._id;
 
   return {
     props: {
-      recipe: {
-        id: recipe?._id.toString()!,
-        title: recipe?.title!,
-        description: recipe?.description!,
-        ingredients: recipe?.ingredients!,
-        steps: recipe?.steps!,
-        image: recipe?.image!,
-      },
+      recipe: res,
     },
     revalidate: 1,
   };

@@ -8,7 +8,7 @@ function Logo({ size }: LogoProps) {
   return (
     <div className={`${styles[size]} ${styles.logo}`}>
       <i className="material-icons">restaurant_menu</i>
-      <p>RECIPE BOOK</p>
+      <p>RECIPE BOX</p>
     </div>
   );
 }

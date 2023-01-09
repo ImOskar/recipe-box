@@ -1,38 +1,34 @@
 import Head from "next/head";
 import Image from "next/image";
+import { useSession } from "next-auth/react";
 import backgroundImage from "../public/pexels-ella-olsson-1640774.jpg";
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 import RecipeList from "../components/recipes/RecipeList";
-import { Recipe } from "./add-recipe";
 import styles from "../styles/Home.module.css";
 import RecipeFilter from "../components/recipes/RecipeFilter";
 import Link from "next/link";
-
-import { RECIPE_LIST } from "../components/recipes/RECIPE_LIST";
 import Logo from "../components/ui/Logo";
 import Button from "../components/ui/Button";
 
-type Filter = "" | "Breakfast" | "Lunch" | "Dinner";
-
 export default function Home() {
-  const recipes = RECIPE_LIST;
+  const { data: session } = useSession();
+  // const [query, setQuery] = useState("");
+  // const [filter, setFilter] = useState("");
 
-  const [query, setQuery] = useState("");
-  const [filter, setFilter] = useState("");
+  // const handleSearch = (query: string) => {
+  //   setQuery(query);
+  // };
 
-  const handleSearch = (query: string) => {
-    setQuery(query);
-  };
+  // const handleFilter = (filter: Filter) => {
+  //   setFilter(filter);
+  // };
 
-  const handleFilter = (filter: Filter) => {
-    setFilter(filter);
-  };
-
-  const displayFiltered = (items: Recipe[]) => {
-    return items.filter((recipe) => {
-      return recipe.title.toLowerCase().indexOf(query.toLowerCase()) !== -1;
-    });
-  };
+  // const displayFiltered = (items: Recipe[]) => {
+  //   return items.filter((recipe) => {
+  //     return recipe.title.toLowerCase().indexOf(query.toLowerCase()) !== -1;
+  //   });
+  // };
+  //console.log(session);
 
   return (
     <Fragment>
@@ -58,13 +54,34 @@ export default function Home() {
             <Logo size="splash" />
           </div>
           <p className={styles.splashtext}>All your recipes in one place</p>
-          <Link href="/register">
-            <Button addStyle={["signup", "lrg"]}>Sign up</Button>
-          </Link>
+          {!session ? (
+            <Link href="/register">
+              <Button addStyle={["signup", "lrg"]}>Sign up</Button>
+            </Link>
+          ) : (
+            <Link href="/explore">
+              <Button addStyle={["signup", "lrg"]}>Explore recipes</Button>
+            </Link>
+          )}
         </div>
       </section>
-      <RecipeFilter handler={handleSearch} />
-      <RecipeList recipes={displayFiltered(recipes)} />
+      {/* <RecipeFilter handler={handleSearch} />
+      <RecipeList recipes={displayFiltered(recipes)} /> */}
     </Fragment>
   );
 }
+
+// export async function getStaticProps(context: GetSessionParams | undefined) {
+//   return {
+//     props: {
+//       session: await getSession(context),
+//     },
+//   };
+// }
+
+// props: {
+//   session: await unstable_getServerSession(
+//     context.req,
+//     context.res,
+//     authOptions
+//   }

@@ -1,4 +1,12 @@
+import router from "next/router";
 import SignUpForm from "../../components/user/SignUpForm";
+
+export type User = {
+  id?: string;
+  username: string;
+  email: string;
+  password: string;
+};
 
 function RegisterPage() {
   return (
