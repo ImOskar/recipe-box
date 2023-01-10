@@ -45,9 +45,7 @@ function NavBar() {
               </Link>
               <span
                 className={styles.signout}
-                onClick={() =>
-                  signOut({ callbackUrl: "http://localhost:3000/" })
-                }
+                onClick={() => signOut({ callbackUrl: "/" })}
               >
                 Sign out
               </span>

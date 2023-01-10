@@ -57,7 +57,7 @@ function RecipeDetail({ recipe, handleDelete }: DetailProps) {
             <li key={i}>{step}</li>
           ))}
         </ul>
-        {session?.user.id === recipe.userId && (
+        {session !== null && session?.user.id === recipe.userId && (
           <span className={styles.buttons}>
             <Button addStyle={["med", "edit"]} onClick={handleEdit}>
               <i className="material-icons">edit_note</i>

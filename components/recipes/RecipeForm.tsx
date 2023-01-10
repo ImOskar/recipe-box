@@ -106,7 +106,6 @@ function RecipeForm({
           type="text"
           onChange={handleChange}
           value={recipe.description}
-          required
         />
         <label>Description</label>
       </div>
@@ -157,10 +156,10 @@ function RecipeForm({
         </div>
       </div>
 
-      <div className={styles.box}>
+      {/* <div className={styles.box}>
         recipeCategories?: string[]; keywords?: string[]; url?: string; author?:
         string;
-      </div>
+      </div> */}
       <div>
         <Button type="submit">Save Recipe</Button>
       </div>

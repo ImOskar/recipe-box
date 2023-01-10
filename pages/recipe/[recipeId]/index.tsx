@@ -57,16 +57,17 @@ export async function getStaticPaths() {
 export async function getStaticProps(context: GetStaticPropsContext) {
   const id = context.params?.recipeId as string;
   const recipeCollection = await getRecipeCollection();
-  let recipeFromDb = await recipeCollection.findOne({ _id: new ObjectId(id) })!;
+  let recipe = await recipeCollection.findOne({ _id: new ObjectId(id) })!;
   return {
     props: {
       recipe: {
-        id: recipeFromDb?._id.toString()!,
-        title: recipeFromDb?.title!,
-        description: recipeFromDb?.description!,
-        ingredients: recipeFromDb?.ingredients!,
-        steps: recipeFromDb?.steps!,
-        image: recipeFromDb?.image!,
+        id: recipe?._id.toString(),
+        title: recipe?.title,
+        description: recipe?.description,
+        ingredients: recipe?.ingredients,
+        steps: recipe?.steps,
+        image: recipe?.image,
+        userId: recipe?.userId,
       },
     },
     revalidate: 1,

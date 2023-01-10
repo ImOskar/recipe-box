@@ -52,6 +52,7 @@ export async function getServerSideProps(context: GetSessionParams) {
         ingredients: recipe.ingredients,
         steps: recipe.steps,
         image: recipe.image,
+        userId: recipe.userId,
       })),
     },
   };

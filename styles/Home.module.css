@@ -1,6 +1,6 @@
 .splashcontainer {
   position: relative;
-  margin-top: -10rem;
+  margin: -10rem 0;
   height: 100vh;
   width: 100vw;
 }

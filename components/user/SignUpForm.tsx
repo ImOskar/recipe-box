@@ -40,11 +40,10 @@ function SignUpForm() {
       if (result.message) {
         setMessage(result.message);
       }
-      if (result.message == "success") {
+      if (result.message == "User registered") {
         let { email, password } = user;
         let options = { redirect: false, email, password };
         const res = await signIn("credentials", options);
-        console.log("SIGNIN SIGNUPPAGE: " + res);
         router.push("/");
       }
     } catch (error) {}
