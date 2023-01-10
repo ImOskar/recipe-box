@@ -1,4 +1,7 @@
 import { getSession, GetSessionParams } from "next-auth/react";
+import { useSession } from "next-auth/react";
+import router from "next/router";
+import { useEffect } from "react";
 import RecipeList from "../../components/recipes/RecipeList";
 import { getRecipeCollection } from "../../lib/mongodb";
 import { Recipe } from "../add-recipe";
@@ -8,6 +11,12 @@ type MyRecipesProps = {
 };
 
 function MyRecipes({ recipes }: MyRecipesProps) {
+  // const { data: session } = useSession();
+
+  // useEffect(() => {
+  //   if (!session) router.push("/log-in");
+  // }, []);
+
   return (
     <section>
       <RecipeList recipes={recipes} />
@@ -39,8 +48,16 @@ export default MyRecipes;
 
 export async function getServerSideProps(context: GetSessionParams) {
   const session = await getSession(context);
+  if (session === null) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/log-in",
+      },
+      props: {},
+    };
+  }
   let userId = session?.user.id;
-  console.log(userId);
   const recipeCollection = await getRecipeCollection();
   let recipes = await recipeCollection.find({ userId: userId }).toArray();
   return {

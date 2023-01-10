@@ -1,6 +1,8 @@
 import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
+import { useSession, getSession } from "next-auth/react";
 import RecipeForm from "../../components/recipes/RecipeForm";
+import { useEffect } from "react";
+import { GetServerSidePropsContext } from "next";
 
 export type Recipe = {
   id: string;
@@ -23,6 +25,10 @@ export type Recipe = {
 function AddRecipePage() {
   const { data: session } = useSession();
   const router = useRouter();
+
+  // useEffect(() => {
+  //   if (!session) router.push("/log-in");
+  // }, []);
 
   const handleAddRecipe = async (recipeData: Recipe) => {
     recipeData.userId = session?.user.id;
@@ -47,3 +53,17 @@ function AddRecipePage() {
 }
 
 export default AddRecipePage;
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const session = await getSession(context);
+  if (session === null) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/log-in",
+      },
+      props: {},
+    };
+  }
+  return { props: {} };
+}

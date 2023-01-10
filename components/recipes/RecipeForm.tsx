@@ -63,7 +63,9 @@ function RecipeForm({
 
   return (
     <FormLayout handleSubmit={handleSubmit}>
-      <p className={styles.title}>{"Add new recipe"}</p>
+      <p className={styles.title}>
+        {edit ? "Edit your recipe" : "Add new recipe"}
+      </p>
       <p className={styles.subtitle}>Recipe information (required):</p>
       <div className={styles.box}>
         <input
