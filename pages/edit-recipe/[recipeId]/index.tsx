@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { GetStaticPropsContext } from "next/types";
+import { GetServerSidePropsContext, GetStaticPropsContext } from "next/types";
 import RecipeForm from "../../../components/recipes/RecipeForm";
 import { getRecipeCollection } from "../../../lib/mongodb";
 import { ObjectId } from "mongodb";
@@ -23,7 +23,7 @@ function EditRecipe({ recipe }: EditProps) {
       });
       let result = await res.json();
     } catch (error) {}
-    router.push(`/`);
+    router.push(`/my-recipes`);
   };
 
   return (
@@ -35,21 +35,37 @@ function EditRecipe({ recipe }: EditProps) {
 
 export default EditRecipe;
 
-export async function getStaticPaths() {
-  const recipeCollection = await getRecipeCollection();
-  const recipes = await recipeCollection
-    .find({}, { projection: { _id: 1 } })
-    .toArray();
-  return {
-    fallback: false,
-    paths: recipes.map((recipe) => ({
-      params: { recipeId: recipe._id.toString() },
-    })),
-  };
-}
+// export async function getStaticPaths() {
+//   const recipeCollection = await getRecipeCollection();
+//   const recipes = await recipeCollection
+//     .find({}, { projection: { _id: 1 } })
+//     .toArray();
+//   return {
+//     fallback: false,
+//     paths: recipes.map((recipe) => ({
+//       params: { recipeId: recipe._id.toString() },
+//     })),
+//   };
+// }
 
-export async function getStaticProps({ params }: GetStaticPropsContext) {
-  const id = params?.recipeId as string;
+// export async function getStaticProps({ params }: GetStaticPropsContext) {
+//   const id = params?.recipeId as string;
+//   const recipeCollection = await getRecipeCollection();
+//   let recipe = await recipeCollection.findOne({ _id: new ObjectId(id) });
+//   let res = { ...recipe };
+//   res.id = recipe?._id.toString();
+//   delete res._id;
+
+//   return {
+//     props: {
+//       recipe: res,
+//     },
+//     revalidate: 1,
+//   };
+// }
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const id = context.params?.recipeId as string;
   const recipeCollection = await getRecipeCollection();
   let recipe = await recipeCollection.findOne({ _id: new ObjectId(id) });
   let res = { ...recipe };
@@ -60,6 +76,5 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
     props: {
       recipe: res,
     },
-    revalidate: 1,
   };
 }

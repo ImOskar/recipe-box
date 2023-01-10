@@ -16,7 +16,25 @@ function Explore({ recipes }: ExploreProps) {
 
 export default Explore;
 
-export async function getStaticProps() {
+// export async function getStaticProps() {
+//   const recipeCollection = await getRecipeCollection();
+//   let recipes = await recipeCollection.find().toArray();
+//   return {
+//     props: {
+//       recipes: recipes.map((recipe) => ({
+//         id: recipe._id.toString(),
+//         title: recipe.title,
+//         description: recipe.description,
+//         ingredients: recipe.ingredients,
+//         steps: recipe.steps,
+//         image: recipe.image,
+//       })),
+//     },
+//     revalidate: 1,
+//   };
+// }
+
+export async function getServerSideProps() {
   const recipeCollection = await getRecipeCollection();
   let recipes = await recipeCollection.find().toArray();
   return {
@@ -28,8 +46,8 @@ export async function getStaticProps() {
         ingredients: recipe.ingredients,
         steps: recipe.steps,
         image: recipe.image,
+        userId: recipe.userId,
       })),
     },
-    revalidate: 1,
   };
 }

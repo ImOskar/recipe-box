@@ -25,7 +25,6 @@ function AddRecipePage() {
   const router = useRouter();
 
   const handleAddRecipe = async (recipeData: Recipe) => {
-    console.log("SESSIONADD_RECIPE: " + session);
     recipeData.userId = session?.user.id;
     try {
       const res = await fetch("/api/recipes", {
@@ -37,7 +36,7 @@ function AddRecipePage() {
       });
       let result = await res.json();
     } catch (error) {}
-    router.push("/");
+    router.push("/my-recipes");
   };
 
   return (

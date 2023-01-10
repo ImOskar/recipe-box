@@ -10,7 +10,9 @@ function RecipeList({ recipes }: ListProps) {
   return (
     <section className={styles.recipelist}>
       {!recipes.length && (
-        <div>Looks like you should start adding recipes!</div>
+        <div className={styles.empty}>
+          Looks like you should start adding recipes!
+        </div>
       )}
       {recipes.map((recipe) => (
         <RecipeCard key={recipe.title} {...recipe} />

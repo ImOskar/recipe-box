@@ -4,3 +4,10 @@
   align-items: center;
   flex-wrap: wrap;
 }
+
+.empty {
+  height: 60vh;
+  font-size: var(--xl);
+  text-align: center;
+  font-weight: 300;
+}
