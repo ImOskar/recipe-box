@@ -4,9 +4,11 @@ import Button from "../ui/Button";
 import FormLayout from "../ui/FormLayout";
 import styles from "./../ui/FormLayout.module.css";
 import RecipeImage from "./RecipeImage";
+import RecipeImport from "./RecipeImport";
 
 type FormProps = {
   handleAddRecipe: (data: Recipe) => void;
+  save: boolean;
   edit?: boolean;
   values?: Recipe;
 };
@@ -31,6 +33,7 @@ const initialValues = {
 
 function RecipeForm({
   handleAddRecipe,
+  save,
   edit,
   values = initialValues,
 }: FormProps) {
@@ -66,7 +69,12 @@ function RecipeForm({
       <p className={styles.title}>
         {edit ? "Edit your recipe" : "Add new recipe"}
       </p>
-      <p className={styles.subtitle}>Recipe information (required):</p>
+      {!edit && <RecipeImport setRecipe={setRecipe} />}
+      <p className={styles.subtitle}>Add recipe:</p>
+      <div className={styles.sectiontitle}>
+        <p>Recipe information (required):</p>
+        <div className={styles.seperator}></div>
+      </div>
       <div className={styles.box}>
         <input
           className={styles.input}
@@ -99,7 +107,10 @@ function RecipeForm({
         />
         <label>Instructions</label>
       </div>
-      <p className={styles.subtitle}>Recipe details (optional):</p>
+      <div className={styles.sectiontitle}>
+        <p>Recipe details (optional):</p>
+        <div className={styles.seperator}></div>
+      </div>
       <RecipeImage recipe={recipe} setImage={setRecipe} />
       <div className={styles.box}>
         <input
@@ -157,14 +168,34 @@ function RecipeForm({
           <label>Yield</label>
         </div>
       </div>
+      <div className={styles.box}>
+        <input
+          className={styles.input}
+          name="author"
+          type="text"
+          onChange={handleChange}
+          value={recipe.author}
+        />
+        <label>Author</label>
+      </div>
+      <div className={styles.box}>
+        <input
+          className={styles.input}
+          name="url"
+          type="text"
+          onChange={handleChange}
+          value={recipe.url}
+        />
+        <label>Recipe url</label>
+      </div>
 
       {/* <div className={styles.box}>
-        recipeCategories?: string[]; keywords?: string[]; url?: string; author?:
-        string;
+        recipeCategories?: string[]; recipeCuisines; keywords?: string[];
       </div> */}
-      <div>
-        <Button type="submit">Save Recipe</Button>
-      </div>
+
+      <Button type="submit" loading={save}>
+        Save Recipe
+      </Button>
     </FormLayout>
   );
 }

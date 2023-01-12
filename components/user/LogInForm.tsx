@@ -4,6 +4,7 @@ import Button from "../ui/Button";
 import FormLayout from "../ui/FormLayout";
 import styles from "./../ui/FormLayout.module.css";
 import Router from "next/router";
+import Link from "next/link";
 
 function LogInForm() {
   const [user, setUser] = useState({ email: "", password: "" });
@@ -53,6 +54,7 @@ function LogInForm() {
       </div>
       <p className={styles.message}>{message}</p>
       <Button type="submit">Log in</Button>
+      <Link href={"/register"}>Don&apos;t have an account? Sign up</Link>
     </FormLayout>
   );
 }

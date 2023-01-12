@@ -5,10 +5,13 @@ import { User } from "../../pages/register";
 import Button from "../ui/Button";
 import FormLayout from "../ui/FormLayout";
 import styles from "./../ui/FormLayout.module.css";
+import Link from "next/link";
 
 function SignUpForm() {
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState({ message: "", type: "" });
   const [verifyPassword, setVerifyPassword] = useState("");
+  const [validEmail, setValidEmail] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [user, setUser] = useState<User>({
     username: "",
     email: "",
@@ -17,17 +20,36 @@ function SignUpForm() {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
+    if (e.target.name === "email") setValidEmail(e.target.checkValidity());
     const { name, value } = e.target;
     setUser({ ...user, [name]: value });
   };
 
+  const checkInputs = () => {
+    if (user.password !== verifyPassword) {
+      setMessage({ message: "Passwords don't match.", type: "error" });
+      return false;
+    } else if (user.password.length < 7) {
+      setMessage({
+        message: "Password needs to be at least 7 characters.",
+        type: "error",
+      });
+      return false;
+    } else if (!validEmail) {
+      setMessage({
+        message: "Make sure to enter a valid email address.",
+        type: "error",
+      });
+      return false;
+    }
+    return true;
+  };
+
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
-    setMessage("");
-    if (user.password !== verifyPassword) {
-      setMessage("Passwords don't match");
-      return;
-    }
+    setMessage({ message: "", type: "" });
+    if (!checkInputs()) return;
+    setLoading(true);
     try {
       const res = await fetch("/api/auth/register", {
         method: "POST",
@@ -38,7 +60,8 @@ function SignUpForm() {
       });
       let result = await res.json();
       if (result.message) {
-        setMessage(result.message);
+        setMessage({ message: result.message, type: "success" });
+        setLoading(false);
       }
       if (result.message == "User registered") {
         let { email, password } = user;
@@ -46,7 +69,9 @@ function SignUpForm() {
         const res = await signIn("credentials", options);
         router.push("/");
       }
-    } catch (error) {}
+    } catch (error) {
+      setLoading(false);
+    }
   };
 
   return (
@@ -92,8 +117,13 @@ function SignUpForm() {
         />
         <label>Verify password</label>
       </div>
-      <p className={styles.message}>{message}</p>
-      <Button type="submit">Register</Button>
+      <p className={`${styles.message} ${styles[message.type]}`}>
+        {message.message}
+      </p>
+      <Button type="submit" loading={loading}>
+        Register
+      </Button>
+      <Link href={"/log-in"}>Already have an account? Log in</Link>
     </FormLayout>
   );
 }

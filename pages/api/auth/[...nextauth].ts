@@ -5,7 +5,7 @@ import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import clientPromise, { getUserCollection } from "../../../lib/mongodb";
 import { NextApiRequest, NextApiResponse } from "next";
 
-const options: NextAuthOptions = {
+export const options: NextAuthOptions = {
   session: { strategy: "jwt" },
   secret: process.env.NEXTAUTH_SECRET,
   adapter: MongoDBAdapter(clientPromise),
@@ -17,7 +17,6 @@ const options: NextAuthOptions = {
       if (session?.user) {
         let str = token.uid as string;
         session.user.id = str;
-        // session.user.id = user.id;
       }
       return session;
     },
@@ -30,7 +29,10 @@ const options: NextAuthOptions = {
   },
   providers: [
     CredentialsProvider({
-      credentials: { email: { type: "email" }, password: { type: "password" } },
+      credentials: {
+        email: { type: "email" },
+        password: { type: "password" },
+      },
       async authorize(credentials, req) {
         const password = credentials?.password!;
         const email = credentials?.email!;
@@ -43,13 +45,16 @@ const options: NextAuthOptions = {
         if (!verifyPassword) {
           throw new Error("Password Incorrect.");
         }
-
-        let id = user._id.toString();
-        return {
-          id: id,
-          name: user.name,
-          email: user.email,
-        };
+        if (user) {
+          let id = user._id.toString();
+          const userObj = {
+            id: id,
+            name: user.username,
+            email: user.email,
+            image: null,
+          };
+          return userObj;
+        } else return null;
       },
     }),
   ],

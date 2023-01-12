@@ -1,8 +1,10 @@
 import { useRouter } from "next/router";
-import { useSession, getSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import RecipeForm from "../../components/recipes/RecipeForm";
-import { useEffect } from "react";
 import { GetServerSidePropsContext } from "next";
+import { useState } from "react";
+import { unstable_getServerSession } from "next-auth";
+import { options } from "../api/auth/[...nextauth]";
 
 export type Recipe = {
   id: string;
@@ -16,6 +18,7 @@ export type Recipe = {
   totalTime?: string;
   recipeYield?: number | string;
   recipeCategories?: string[];
+  recipeCuisines?: string[];
   keywords?: string[];
   url?: string;
   userId?: string;
@@ -25,13 +28,11 @@ export type Recipe = {
 function AddRecipePage() {
   const { data: session } = useSession();
   const router = useRouter();
-
-  // useEffect(() => {
-  //   if (!session) router.push("/log-in");
-  // }, []);
+  const [savingRecipe, setSavingRecipe] = useState(false);
 
   const handleAddRecipe = async (recipeData: Recipe) => {
     recipeData.userId = session?.user.id;
+    setSavingRecipe(true);
     try {
       const res = await fetch("/api/recipes", {
         method: "POST",
@@ -42,12 +43,13 @@ function AddRecipePage() {
       });
       let result = await res.json();
     } catch (error) {}
+    setSavingRecipe(false);
     router.push("/my-recipes");
   };
 
   return (
     <section>
-      <RecipeForm handleAddRecipe={handleAddRecipe} />
+      <RecipeForm handleAddRecipe={handleAddRecipe} save={savingRecipe} />
     </section>
   );
 }
@@ -55,7 +57,11 @@ function AddRecipePage() {
 export default AddRecipePage;
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const session = await getSession(context);
+  const session = await unstable_getServerSession(
+    context.req,
+    context.res,
+    options
+  );
   if (session === null) {
     return {
       redirect: {

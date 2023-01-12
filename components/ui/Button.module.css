@@ -1,41 +1,25 @@
-.sm {
-  height: 50px;
-  width: 50px;
-}
-
-.med {
-  height: 45px;
-  width: 150px;
-}
-
-.lrg {
-  height: 45px;
-  width: 250px;
-}
-
 .button {
   border-radius: 4px;
   background-color: var(--blue);
   height: 45px;
   padding: 12px;
-  width: 260px;
+  width: 100%;
   font-size: 14px;
   font-weight: 500;
   color: #fff;
   border: none;
   cursor: pointer;
-  margin: 20px auto;
 }
 
 .button:hover {
   background-color: #3b729f;
 }
 
-.signup {
+.orange {
   background-color: var(--orange);
 }
 
-.signup:hover {
+.orange:hover {
   background-color: rgb(255, 183, 0);
 }
 
@@ -45,6 +29,15 @@
 
 .lightgrey:hover {
   background-color: #bababa;
+}
+
+.imgupload {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 1.2rem;
+  color: #fff;
 }
 
 .alert,
@@ -75,4 +68,19 @@
 
 .button:disabled {
   background-color: #858585;
+}
+
+.sm {
+  height: 50px;
+  width: 50px;
+}
+
+.med {
+  height: 45px;
+  width: 150px;
+}
+
+.lrg {
+  height: 45px;
+  width: 250px;
 }

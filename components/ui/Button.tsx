@@ -22,7 +22,7 @@ function Button({ children, addStyle, loading, ...rest }: ButtonProps) {
 
   return (
     <button
-      className={`${styles.button} ${addStyles()} loading`}
+      className={`${styles.button} ${addStyles()}`}
       disabled={loading}
       {...rest}
     >

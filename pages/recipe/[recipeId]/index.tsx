@@ -77,18 +77,13 @@ export default RecipeDetailPage;
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const id = context.params?.recipeId as string;
   const recipeCollection = await getRecipeCollection();
-  let recipe = await recipeCollection.findOne({ _id: new ObjectId(id) })!;
+  let result = await recipeCollection.findOne({ _id: new ObjectId(id) });
+  let recipe = { ...result };
+  recipe.id = result?._id.toString();
+  delete recipe._id;
   return {
     props: {
-      recipe: {
-        id: recipe?._id.toString(),
-        title: recipe?.title,
-        description: recipe?.description,
-        ingredients: recipe?.ingredients,
-        steps: recipe?.steps,
-        image: recipe?.image,
-        userId: recipe?.userId,
-      },
+      recipe: recipe,
     },
   };
 }

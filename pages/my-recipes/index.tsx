@@ -1,22 +1,15 @@
-import { getSession, GetSessionParams } from "next-auth/react";
-import { useSession } from "next-auth/react";
-import router from "next/router";
-import { useEffect } from "react";
+import { GetServerSidePropsContext } from "next";
+import { unstable_getServerSession } from "next-auth";
 import RecipeList from "../../components/recipes/RecipeList";
 import { getRecipeCollection } from "../../lib/mongodb";
 import { Recipe } from "../add-recipe";
+import { options } from "../api/auth/[...nextauth]";
 
 type MyRecipesProps = {
   recipes: Recipe[];
 };
 
 function MyRecipes({ recipes }: MyRecipesProps) {
-  // const { data: session } = useSession();
-
-  // useEffect(() => {
-  //   if (!session) router.push("/log-in");
-  // }, []);
-
   return (
     <section>
       <RecipeList recipes={recipes} />
@@ -26,28 +19,12 @@ function MyRecipes({ recipes }: MyRecipesProps) {
 
 export default MyRecipes;
 
-// export async function getStaticProps() {
-//   const recipeCollection = await getRecipeCollection();
-//   let recipes = await recipeCollection
-//     .find({ userId: "63b7ebf0d20dcf446e6e707e" })
-//     .toArray();
-//   return {
-//     props: {
-//       recipes: recipes.map((recipe) => ({
-//         id: recipe._id.toString(),
-//         title: recipe.title,
-//         description: recipe.description,
-//         ingredients: recipe.ingredients,
-//         steps: recipe.steps,
-//         image: recipe.image,
-//       })),
-//     },
-//     revalidate: 1,
-//   };
-// }
-
-export async function getServerSideProps(context: GetSessionParams) {
-  const session = await getSession(context);
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const session = await unstable_getServerSession(
+    context.req,
+    context.res,
+    options
+  );
   if (session === null) {
     return {
       redirect: {

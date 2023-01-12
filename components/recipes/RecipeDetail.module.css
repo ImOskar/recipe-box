@@ -72,9 +72,13 @@
   font-size: 20px;
 }
 
-.recipedetails h4 {
-  margin-bottom: 1rem;
-  font-size: var(--l);
+.cooktime {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 40%;
+  margin-left: auto;
+  font-size: var(--s);
 }
 
 .recipedetails ul {
@@ -101,7 +105,7 @@
   width: 100%;
   display: flex;
   justify-content: flex-end;
-  padding: 35px;
+  padding: 3rem 0;
 }
 
 @media (max-width: 450px) {
@@ -114,4 +118,29 @@
   .buttons {
     padding: 0;
   }
+}
+
+.sectiontitle {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  margin: 4rem 0 2rem;
+  min-width: 1px;
+  width: 100%;
+  align-items: center;
+}
+
+.sectiontitle p {
+  font-size: var(--m);
+  letter-spacing: 0.2rem;
+  color: var(--grey);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.sectiontitle div {
+  background-color: var(--grey);
+  height: 1px;
+  margin: 8px 0 8px 10px;
+  flex: 1 1;
 }

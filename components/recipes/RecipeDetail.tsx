@@ -7,6 +7,7 @@ import Button from "../ui/Button";
 import Modal from "../ui/Modal";
 import styles from "./RecipeDetail.module.css";
 import fallbackImage from "../../public/pexels-ella-olsson-1640774.jpg";
+import Link from "next/link";
 
 type DetailProps = {
   recipe: Recipe;
@@ -32,7 +33,7 @@ function RecipeDetail({ recipe, handleDelete }: DetailProps) {
       <div className={styles.recipeheader}>
         <h1>{recipe.title}</h1>
         <span></span>
-        <h3>By: Yotem Ottolenghi</h3>
+        <h3>By: {recipe.author ? recipe.author : "UNKNOWN"}</h3>
       </div>
       <span className={styles.image}>
         <Image
@@ -43,20 +44,41 @@ function RecipeDetail({ recipe, handleDelete }: DetailProps) {
         />
       </span>
       <div className={styles.recipedetails}>
+        <div className={styles.cooktime}>
+          <p>
+            <span>Prep time:</span>30 mins
+          </p>
+          <p>
+            <span>Cook time:</span>30 mins
+          </p>
+          <p>
+            <span>Total time:</span>60 mins
+          </p>
+          <p>
+            <span>Servings:</span>Serves 4
+          </p>
+        </div>
         <i className="material-icons">favorite_border</i>
         <p className={styles.description}>{recipe.description}</p>
-        <h4>Ingredients:</h4>
+        <div className={styles.sectiontitle}>
+          <p>Ingredients:</p>
+          <div className={styles.seperator}></div>
+        </div>
         <ul>
           {recipe.ingredients.map((ingredient, i) => (
             <li key={i}>{ingredient}</li>
           ))}
         </ul>
-        <h4>Instructions:</h4>
+        <div className={styles.sectiontitle}>
+          <p>Instructions:</p>
+          <div className={styles.seperator}></div>
+        </div>
         <ul className={styles.list}>
           {recipe.steps.map((step, i) => (
             <li key={i}>{step}</li>
           ))}
         </ul>
+        <Link href="http://www.example.com">Original recipe</Link>
         {session !== null && session?.user.id === recipe.userId && (
           <span className={styles.buttons}>
             <Button addStyle={["med", "edit"]} onClick={handleEdit}>

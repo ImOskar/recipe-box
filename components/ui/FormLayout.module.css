@@ -3,67 +3,98 @@
   align-items: center;
   justify-content: center;
   height: 100%;
-  width: 100%;
+  width: min(400px, 100%);
   gap: 30px;
   flex-direction: column;
   padding: 30px;
   position: relative;
+  margin: auto;
 }
 
 .form div {
   position: relative;
 }
 
-.form .title {
+.form a:hover {
+  text-decoration: underline;
+}
+
+.title {
   color: rgb(30, 30, 30);
-  font-size: var(--l);
-  font-weight: bold;
-  margin: 30px auto;
+  font-size: var(--xxl);
+  font-weight: 700;
+  text-align: center;
+  margin: 3rem 0px;
+  text-transform: uppercase;
+  letter-spacing: 0.3rem;
 }
 
 .subtitle {
-  align-self: flex-start;
-  font-size: var(--m);
-  margin: 0;
+  color: rgb(30, 30, 30);
+  font-size: var(--l);
+  font-weight: 400;
+  align-self: baseline;
+  margin: 2rem 0rem -2rem;
+  letter-spacing: 0.05rem;
 }
 
-.form .box {
+.sectiontitle {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  min-width: 1px;
+  width: 100%;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.sectiontitle p {
+  font-size: var(--s);
+  letter-spacing: 0.2rem;
+  color: var(--grey);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.sectiontitle div {
+  background-color: #eaeaea;
+  height: 1px;
+  margin: 8px 0 8px 10px;
+  flex: 1 1;
+}
+
+.box {
   display: flex;
   flex-flow: column-reverse;
   justify-content: center;
   border: 0;
-  width: 450px;
+  width: 100%;
   border-radius: 5px;
   padding: 5px 10px 10px;
   font-size: var(--m);
   cursor: text;
-  background-color: rgb(0, 0, 0, 0.1);
+  border: 1px solid #eaeaea;
 }
 
-.form .box:hover {
-  background-color: rgb(0, 0, 0, 0.1);
+.box:focus-within {
+  border: 1px solid #666;
 }
 
-.form .box:focus-within {
-  background-color: rgb(0, 0, 0, 0.2);
-}
-
-.form .box textarea {
+.box textarea {
   resize: none;
   height: 150px;
 }
 
-.form .box input,
-.form .box textarea {
+.box input,
+.box textarea {
   border: 0;
-  background-color: rgb(0, 0, 0, 0);
   outline: 0;
   font-size: 1em;
   color: rgb(0, 0, 0);
 }
 
-.form .box input + label,
-.form .box textarea + label {
+.box input + label,
+.box textarea + label {
   color: rgb(0, 0, 0, 0.6);
   cursor: text;
   font-size: var(--s);
@@ -71,39 +102,37 @@
 }
 
 .box input:-webkit-autofill,
-.boxinput:-webkit-autofill:hover,
+.box input:-webkit-autofill:hover,
 .box input:-webkit-autofill:focus,
 .box textarea:-webkit-autofill,
 .box textarea:-webkit-autofill:hover,
 .box textarea:-webkit-autofill:focus {
-  -webkit-box-shadow: 0 0 0px 1000px #e1e1e1e1 inset;
+  -webkit-box-shadow: 0 0 0px 1000px #ffffff inset;
 }
 
 .smallboxes {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   flex-wrap: wrap;
   gap: 1rem;
-  width: 450px;
+  width: 100%;
 }
 
 .smallboxes div {
   flex: 1;
+  width: 45%;
 }
 
 .message {
-  margin: 0;
+  margin-top: -2rem;
   font-size: var(--s);
+}
+
+.error {
   color: crimson;
 }
 
-@media only screen and (max-width: 830px) {
-  .form .box,
-  .smallboxes {
-    width: 300px;
-  }
-
-  .smallboxes .box {
-    width: 140px;
-  }
+.success {
+  color: #44f34c;
 }

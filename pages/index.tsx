@@ -9,6 +9,9 @@ import RecipeFilter from "../components/recipes/RecipeFilter";
 import Link from "next/link";
 import Logo from "../components/ui/Logo";
 import Button from "../components/ui/Button";
+import { GetServerSidePropsContext } from "next";
+import { unstable_getServerSession } from "next-auth";
+import { options } from "./api/auth/[...nextauth]";
 
 export default function Home() {
   const { data: session } = useSession();
@@ -56,11 +59,11 @@ export default function Home() {
           <p className={styles.splashtext}>All your recipes in one place</p>
           {!session ? (
             <Link href="/register">
-              <Button addStyle={["signup", "lrg"]}>Sign up</Button>
+              <Button addStyle={["orange", "lrg"]}>Sign up</Button>
             </Link>
           ) : (
             <Link href="/explore">
-              <Button addStyle={["signup", "lrg"]}>Explore recipes</Button>
+              <Button addStyle={["orange", "lrg"]}>Explore recipes</Button>
             </Link>
           )}
         </div>
@@ -71,17 +74,11 @@ export default function Home() {
   );
 }
 
-// export async function getStaticProps(context: GetSessionParams | undefined) {
-//   return {
-//     props: {
-//       session: await getSession(context),
-//     },
-//   };
-// }
-
-// props: {
-//   session: await unstable_getServerSession(
-//     context.req,
-//     context.res,
-//     authOptions
-//   }
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const session = await unstable_getServerSession(
+    context.req,
+    context.res,
+    options
+  );
+  return { props: { session } };
+}

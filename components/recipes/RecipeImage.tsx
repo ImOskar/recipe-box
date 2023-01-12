@@ -40,7 +40,6 @@ function RecipeImage({ recipe, setImage }: ImageProps) {
 
   return (
     <div className={styles.photobox}>
-      <p>Upload image:</p>
       <input
         className={styles.fileinput}
         type="file"
@@ -49,11 +48,12 @@ function RecipeImage({ recipe, setImage }: ImageProps) {
         onChange={handleFileInput}
       ></input>
       <Button
-        addStyle={["med", "lightgrey"]}
+        addStyle={["imgupload", "orange"]}
         onClick={handleAddImage}
         loading={uploading}
         type="button"
       >
+        Upload image
         <i className="material-icons">add_a_photo</i>
       </Button>
       {recipe.image !== "" && <img src={recipe.image} alt="Upload image" />}
