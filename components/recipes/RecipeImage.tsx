@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction, useState } from "react";
 import styles from "./RecipeImage.module.css";
 import { useS3Upload } from "next-s3-upload";
 import { Recipe } from "../../pages/add-recipe";
+import Spinner from "../ui/Spinner";
 
 type ImageProps = {
   recipe: Recipe;
@@ -10,6 +11,7 @@ type ImageProps = {
 
 function RecipeImage({ recipe, setImage }: ImageProps) {
   const [uploading, setUploading] = useState(false);
+  const [message, setMessage] = useState("");
   let { uploadToS3 } = useS3Upload();
 
   const handleFileInput = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -24,10 +26,12 @@ function RecipeImage({ recipe, setImage }: ImageProps) {
     try {
       let { url } = await uploadToS3(image);
       setImage({ ...recipe, image: url });
+      setMessage("Image uploaded");
       setUploading(false);
     } catch (error) {
-      console.log(error);
+      console.log(JSON.stringify(error));
       setImage({ ...recipe, image: "" });
+      setMessage("Upload failed");
       setUploading(false);
     }
   };
@@ -46,6 +50,8 @@ function RecipeImage({ recipe, setImage }: ImageProps) {
         ></input>
       </label>
       {recipe.image !== "" && <img src={recipe.image} alt="Upload image" />}
+      {uploading && <Spinner />}
+      <p className={styles.message}>{message}</p>
     </div>
   );
 }

@@ -26,7 +26,10 @@ function RecipeDetail({ recipe, handleDelete, handleLike }: DetailProps) {
   };
 
   const handleUserLike = () => {
-    if (!session) router.push(`/log-in`);
+    if (!session) {
+      router.push(`/log-in`);
+      return;
+    }
     let id = session?.user?.id as string;
     handleLike(id);
     setLikes((likes) => {
