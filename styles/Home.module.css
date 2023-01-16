@@ -22,25 +22,29 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  height: 20rem;
+  width: 100%;
 }
 
 .splashtext {
   color: #000000;
   margin: 0;
   text-align: center;
-  font-size: 2rem;
+  font-size: var(--l);
   font-weight: 200;
   background: #e9f3f55c;
 }
 
 .splashlogo {
   color: var(--blue);
-  font-size: var(--xxl);
+  font-size: 4rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
 }
 
 @media (max-width: 450px) {
-  .splashtextcontainer {
-    height: 25rem;
-    width: 100%;
+  .splashlogo {
+    font-size: var(--xxl);
   }
 }

@@ -12,21 +12,49 @@ import Link from "next/link";
 type DetailProps = {
   recipe: Recipe;
   handleDelete: () => Promise<void>;
+  handleLike: (id: string) => void;
 };
 
-function RecipeDetail({ recipe, handleDelete }: DetailProps) {
+function RecipeDetail({ recipe, handleDelete, handleLike }: DetailProps) {
   const { data: session } = useSession();
   const [showModal, setShowModal] = useState(false);
+  const [likes, setLikes] = useState(recipe.likes);
   const router = useRouter();
 
   const handleEdit = () => {
     router.push(`/edit-recipe/${recipe.id}`);
   };
 
+  const handleUserLike = () => {
+    if (!session) router.push(`/log-in`);
+    let id = session?.user?.id as string;
+    handleLike(id);
+    setLikes((likes) => {
+      if (!likes) return [id];
+      if (likes.includes(id)) {
+        return likes.filter((like) => like !== id);
+      }
+      return [...likes, id];
+    });
+  };
+
   const image =
     typeof recipe.image !== "undefined" &&
     recipe.image !== "" &&
     "image" in recipe;
+
+  const likeCount = (): string => {
+    if (!likes) return "0 likes";
+    else if (likes.length === 1) return `${likes.length} like`;
+    else return `${likes.length} likes`;
+  };
+
+  const checkIfUndefined = (
+    item: string | number | undefined
+  ): string | number => {
+    if (item) return item;
+    else return "";
+  };
 
   return (
     <div className={styles.wrapper}>
@@ -40,25 +68,42 @@ function RecipeDetail({ recipe, handleDelete }: DetailProps) {
           src={image ? recipe.image! : fallbackImage}
           alt="Recipe image"
           fill
+          priority
           //placeholder="blur"
         />
       </span>
       <div className={styles.recipedetails}>
-        <div className={styles.cooktime}>
-          <p>
-            <span>Prep time:</span>30 mins
-          </p>
-          <p>
-            <span>Cook time:</span>30 mins
-          </p>
-          <p>
-            <span>Total time:</span>60 mins
-          </p>
-          <p>
-            <span>Servings:</span>Serves 4
-          </p>
+        <div className={styles.likescontainer}>
+          <div className={styles.likes}>
+            <Button addStyle={"like"} onClick={handleUserLike}>
+              <i className="material-icons">
+                {session && likes?.includes(session.user.id)
+                  ? "favorite_filled"
+                  : "favorite_border"}
+              </i>
+            </Button>
+            <p>{likeCount()}</p>
+          </div>
+          <div className={styles.cooktime}>
+            <p>
+              <span>Prep time:</span>
+              {checkIfUndefined(recipe.prepTime)}
+            </p>
+            <p>
+              <span>Cook time:</span>
+              {checkIfUndefined(recipe.cookTime)}
+            </p>
+            <p>
+              <span>Total time:</span>
+              {checkIfUndefined(recipe.totalTime)}
+            </p>
+            <p>
+              <span>Servings:</span>
+              {checkIfUndefined(recipe.recipeYield)}
+            </p>
+          </div>
         </div>
-        <i className="material-icons">favorite_border</i>
+        <div className={styles.seperator}></div>
         <p className={styles.description}>{recipe.description}</p>
         <div className={styles.sectiontitle}>
           <p>Ingredients:</p>

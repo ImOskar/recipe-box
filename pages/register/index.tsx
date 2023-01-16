@@ -1,4 +1,3 @@
-import router from "next/router";
 import SignUpForm from "../../components/user/SignUpForm";
 
 export type User = {

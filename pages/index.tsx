@@ -53,9 +53,7 @@ export default function Home() {
           fill
         />
         <div className={styles.splashtextcontainer}>
-          <div className={styles.splashlogo}>
-            <Logo size="splash" />
-          </div>
+          <p className={styles.splashlogo}>Recipe Box</p>
           <p className={styles.splashtext}>All your recipes in one place</p>
           {!session ? (
             <Link href="/register">

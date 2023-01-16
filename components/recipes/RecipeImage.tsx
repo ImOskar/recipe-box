@@ -1,5 +1,4 @@
-import { Dispatch, SetStateAction, useRef, useState } from "react";
-import Button from "../ui/Button";
+import { Dispatch, SetStateAction, useState } from "react";
 import styles from "./RecipeImage.module.css";
 import { useS3Upload } from "next-s3-upload";
 import { Recipe } from "../../pages/add-recipe";
@@ -10,13 +9,8 @@ type ImageProps = {
 };
 
 function RecipeImage({ recipe, setImage }: ImageProps) {
-  const photoRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
   let { uploadToS3 } = useS3Upload();
-
-  const handleAddImage = () => {
-    photoRef.current?.click();
-  };
 
   const handleFileInput = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]!;
@@ -40,22 +34,17 @@ function RecipeImage({ recipe, setImage }: ImageProps) {
 
   return (
     <div className={styles.photobox}>
-      <input
-        className={styles.fileinput}
-        type="file"
-        accept="image/png, image/jpeg"
-        ref={photoRef}
-        onChange={handleFileInput}
-      ></input>
-      <Button
-        addStyle={["imgupload", "orange"]}
-        onClick={handleAddImage}
-        loading={uploading}
-        type="button"
-      >
+      <label className={styles.labelbtn} htmlFor="file">
         Upload image
         <i className="material-icons">add_a_photo</i>
-      </Button>
+        <input
+          className={styles.fileinput}
+          id="file"
+          type="file"
+          accept="image/png, image/jpeg"
+          onChange={handleFileInput}
+        ></input>
+      </label>
       {recipe.image !== "" && <img src={recipe.image} alt="Upload image" />}
     </div>
   );

@@ -16,6 +16,16 @@ function RecipeImport({ setRecipe }: ImportProps) {
     setRecipeUrl({ url: e.target.value, valid: e.target.checkValidity() });
   };
 
+  const checkValue = (item: string) => {
+    if (typeof item !== "undefined") return item;
+    return "";
+  };
+
+  const checkArrayValue = (item: string[]) => {
+    if (typeof item !== "undefined") return item;
+    return [""];
+  };
+
   const handleParse = async () => {
     if (!recipeUrl.valid) {
       setMessage({ message: "Check if url is valid", type: "error" });
@@ -29,20 +39,20 @@ function RecipeImport({ setRecipe }: ImportProps) {
       const rec = {
         id: "0",
         title: parsedRecipe.name,
-        description: parsedRecipe.description && parsedRecipe.description,
+        description: checkValue(parsedRecipe.description),
         steps: parsedRecipe.recipeInstructions,
         ingredients: parsedRecipe.recipeIngredients,
-        image: parsedRecipe.image && parsedRecipe.image,
+        image: checkValue(parsedRecipe.image),
         url: parsedRecipe.url,
-        recipeYield: parsedRecipe.recipeYield && parsedRecipe.recipeYield,
-        totalTime: parsedRecipe.totalTime && parsedRecipe.totalTime,
-        cookTime: parsedRecipe.cookTime && parsedRecipe.cookTime,
-        prepTime: parsedRecipe.prepTime && parsedRecipe.prepTime,
-        keywords: parsedRecipe.keywords && parsedRecipe.keywords,
-        recipeCategories:
-          parsedRecipe.recipeCategories && parsedRecipe.recipeCategories,
-        recipeCuisines:
-          parsedRecipe.recipeCuisines && parsedRecipe.recipeCuisines,
+        recipeYield: checkValue(parsedRecipe.recipeYield),
+        totalTime: checkValue(parsedRecipe.totalTime),
+        cookTime: checkValue(parsedRecipe.cookTime),
+        prepTime: checkValue(parsedRecipe.prepTime),
+        keywords: checkArrayValue(parsedRecipe.keywords),
+        recipeCategories: checkArrayValue(parsedRecipe.recipeCategories),
+        recipeCuisines: checkArrayValue(parsedRecipe.recipeCuisines),
+        userId: "",
+        author: "",
       };
       setRecipe(rec);
       setMessage({

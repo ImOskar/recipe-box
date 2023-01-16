@@ -107,7 +107,7 @@
 .box textarea:-webkit-autofill,
 .box textarea:-webkit-autofill:hover,
 .box textarea:-webkit-autofill:focus {
-  -webkit-box-shadow: 0 0 0px 1000px #ffffff inset;
+  -webkit-box-shadow: 0 0 0px 1000px #fff inset;
 }
 
 .smallboxes {
@@ -125,7 +125,7 @@
 }
 
 .message {
-  margin-top: -2rem;
+  margin-top: -1.5rem;
   font-size: var(--s);
 }
 

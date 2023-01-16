@@ -20,6 +20,7 @@ export type Recipe = {
   recipeCategories?: string[];
   recipeCuisines?: string[];
   keywords?: string[];
+  likes?: string[];
   url?: string;
   userId?: string;
   author?: string;

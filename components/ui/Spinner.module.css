@@ -1,5 +1,28 @@
 .spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinner i {
   animation: spin 1.5s infinite;
+}
+
+.spinnerlrg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: #00000073;
+  color: var(--orange);
+  z-index: 1;
+}
+
+.spinnerlrg i {
+  font-size: 3rem;
 }
 
 @keyframes spin {

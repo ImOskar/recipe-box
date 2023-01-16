@@ -11,3 +11,9 @@
   text-align: center;
   font-weight: 300;
 }
+
+.button {
+  flex-basis: 100%;
+  text-align: center;
+  margin-top: 3rem;
+}

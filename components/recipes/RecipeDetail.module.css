@@ -41,7 +41,7 @@
 
 .image {
   align-self: center;
-  margin-bottom: 30px;
+  /* margin-bottom: 30px; */
   position: relative;
   width: 100vw;
   max-width: 100vw;
@@ -53,30 +53,29 @@
 .image > img {
   object-fit: cover;
 }
-
-/*
-.image > img {
-  position: relative;
-  width: 100vw;
-  max-width: 100vw;
-  height: 300px;
-  object-fit: cover;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
-} */
 
 .recipedetails {
   width: min(600px, 80%);
   font-size: 20px;
 }
 
+.likescontainer {
+  display: flex;
+  margin: 0.5rem;
+}
+
+.likes {
+  display: flex;
+  align-items: center;
+  height: 1.5rem;
+  font-size: var(--s);
+}
+
 .cooktime {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  width: 40%;
+  width: 60%;
   margin-left: auto;
   font-size: var(--s);
 }
@@ -138,8 +137,8 @@
   text-transform: uppercase;
 }
 
-.sectiontitle div {
-  background-color: var(--grey);
+.seperator {
+  background-color: var(--blue);
   height: 1px;
   margin: 8px 0 8px 10px;
   flex: 1 1;

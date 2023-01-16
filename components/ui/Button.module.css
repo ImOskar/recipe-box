@@ -31,13 +31,20 @@
   background-color: #bababa;
 }
 
-.imgupload {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  font-size: 1.2rem;
-  color: #fff;
+.like {
+  background-color: transparent;
+  height: auto;
+  width: auto;
+  padding: 0;
+}
+
+.like i {
+  color: red;
+  width: 1.5rem;
+}
+
+.like:hover {
+  background-color: transparent;
 }
 
 .alert,

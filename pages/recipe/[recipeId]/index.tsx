@@ -3,7 +3,7 @@ import RecipeDetail from "../../../components/recipes/RecipeDetail";
 import { getRecipeCollection } from "../../../lib/mongodb";
 import { ObjectId } from "mongodb";
 import { Recipe } from "../../add-recipe";
-import { GetServerSidePropsContext, GetStaticPropsContext } from "next";
+import { GetServerSidePropsContext } from "next";
 import { useState } from "react";
 import Spinner from "../../../components/ui/Spinner";
 
@@ -12,12 +12,12 @@ type DetailProps = {
 };
 
 function RecipeDetailPage({ recipe }: DetailProps) {
-  const [deleting, setDeleting] = useState(false);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const handleDelete = async () => {
     try {
-      setDeleting(true);
+      setLoading(true);
       const res = await fetch("/api/recipes", {
         method: "DELETE",
         body: JSON.stringify(recipe.id),
@@ -27,52 +27,41 @@ function RecipeDetailPage({ recipe }: DetailProps) {
       });
       let result = await res.json();
     } catch (error) {}
-    setDeleting(false);
+    setLoading(false);
     router.push("/");
+  };
+
+  const handleLike = async (id: string) => {
+    if (typeof recipe.likes !== "undefined") {
+      if (recipe.likes.includes(id)) {
+        recipe.likes = recipe.likes.filter((like) => like !== id);
+      } else recipe.likes = [...recipe.likes, id];
+    } else recipe = { ...recipe, likes: [id] };
+    try {
+      const res = await fetch("/api/recipes", {
+        method: "PUT",
+        body: JSON.stringify(recipe),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      let result = await res.json();
+    } catch (error) {}
   };
 
   return (
     <section>
-      {deleting && <Spinner />}
-      <RecipeDetail recipe={recipe} handleDelete={handleDelete} />
+      {loading && <Spinner style="spinnerlrg" />}
+      <RecipeDetail
+        recipe={recipe}
+        handleDelete={handleDelete}
+        handleLike={handleLike}
+      />
     </section>
   );
 }
 
 export default RecipeDetailPage;
-
-// export async function getStaticPaths() {
-//   const recipeCollection = await getRecipeCollection();
-//   const recipes = await recipeCollection
-//     .find({}, { projection: { _id: 1 } })
-//     .toArray();
-//   return {
-//     fallback: false,
-//     paths: recipes.map((recipe) => ({
-//       params: { recipeId: recipe._id.toString() },
-//     })),
-//   };
-// }
-
-// export async function getStaticProps(context: GetStaticPropsContext) {
-//   const id = context.params?.recipeId as string;
-//   const recipeCollection = await getRecipeCollection();
-//   let recipe = await recipeCollection.findOne({ _id: new ObjectId(id) })!;
-//   return {
-//     props: {
-//       recipe: {
-//         id: recipe?._id.toString(),
-//         title: recipe?.title,
-//         description: recipe?.description,
-//         ingredients: recipe?.ingredients,
-//         steps: recipe?.steps,
-//         image: recipe?.image,
-//         userId: recipe?.userId,
-//       },
-//     },
-//     revalidate: 1,
-//   };
-// }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const id = context.params?.recipeId as string;
