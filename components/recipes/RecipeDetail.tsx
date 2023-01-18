@@ -126,7 +126,9 @@ function RecipeDetail({ recipe, handleDelete, handleLike }: DetailProps) {
             <li key={i}>{step}</li>
           ))}
         </ul>
-        <Link href="http://www.example.com">Original recipe</Link>
+        {typeof recipe.url !== "undefined" && recipe.url !== "" && (
+          <Link href={recipe.url}>Original recipe</Link>
+        )}
         {session !== null && session?.user.id === recipe.userId && (
           <span className={styles.buttons}>
             <Button addStyle={["med", "edit"]} onClick={handleEdit}>

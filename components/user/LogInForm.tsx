@@ -9,18 +9,23 @@ import Link from "next/link";
 function LogInForm() {
   const [user, setUser] = useState({ email: "", password: "" });
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
     const status = await signIn("credentials", {
       redirect: false,
       email: user.email,
       password: user.password,
     });
-    console.log("loginform" + status);
     if (status?.ok) {
+      setLoading(false);
       Router.push("/");
-    } else if (typeof status?.error !== "undefined") setMessage(status?.error);
+    } else if (typeof status?.error !== "undefined") {
+      setLoading(false);
+      setMessage(status?.error);
+    }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -53,7 +58,9 @@ function LogInForm() {
         <label htmlFor="password">Password</label>
       </div>
       <p className={styles.message}>{message}</p>
-      <Button type="submit">Log in</Button>
+      <Button type="submit" loading={loading}>
+        Log in
+      </Button>
       <Link href={"/register"}>Don&apos;t have an account? Sign up</Link>
     </FormLayout>
   );

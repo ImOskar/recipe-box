@@ -1,6 +1,6 @@
 import { GetServerSidePropsContext } from "next";
 import { unstable_getServerSession } from "next-auth";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import RecipeList from "../../components/recipes/RecipeList";
 import { getRecipeCollection } from "../../lib/mongodb";
 import { Recipe } from "../add-recipe";
@@ -16,6 +16,10 @@ function MyRecipes({ recipes, lastValue }: MyRecipesProps) {
   const [lastFetchedValue, setLastFetchedValue] = useState(lastValue);
   const [fetching, setFetching] = useState(false);
   const [noMoreItems, setNoMoreItems] = useState(false);
+
+  useEffect(() => {
+    if (!lastFetchedValue) setNoMoreItems(true);
+  }, []);
 
   const handleFetch = async () => {
     if (!lastFetchedValue) {
@@ -74,18 +78,27 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     .sort({ _id: -1 })
     .limit(20)
     .toArray();
-  let lastValue = recipes[19]._id.toString();
+  let recipeList;
+  let lastValue;
+  if (recipes.length < 1) {
+    lastValue = null;
+    recipeList = recipes;
+  } else {
+    recipeList = recipes.map((recipe) => ({
+      id: recipe._id.toString(),
+      title: recipe.title,
+      description: recipe.description,
+      ingredients: recipe.ingredients,
+      steps: recipe.steps,
+      image: recipe.image,
+      userId: recipe.userId,
+    }));
+    if (recipes.length > 20) lastValue = recipes[19]._id.toString();
+    else lastValue = null;
+  }
   return {
     props: {
-      recipes: recipes.map((recipe) => ({
-        id: recipe._id.toString(),
-        title: recipe.title,
-        description: recipe.description,
-        ingredients: recipe.ingredients,
-        steps: recipe.steps,
-        image: recipe.image,
-        userId: recipe.userId,
-      })),
+      recipes: recipeList,
       lastValue: lastValue,
     },
   };

@@ -7,9 +7,27 @@
 
 .empty {
   height: 60vh;
-  font-size: var(--xl);
   text-align: center;
   font-weight: 300;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.empty p {
+  font-size: var(--l);
+}
+
+.empty a {
+  padding: 0.5rem 2.5rem;
+  border-radius: 4px;
+  background-color: var(--orange);
+  color: #fff;
+}
+
+.empty a:hover {
+  background-color: rgb(255, 183, 0);
 }
 
 .button {

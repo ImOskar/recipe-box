@@ -88,6 +88,14 @@
   margin-bottom: 0.75rem;
 }
 
+.recipedetails a {
+  font-size: var(--m);
+}
+
+.recipedetails a:hover {
+  text-decoration: underline;
+}
+
 .description {
   font-size: var(--l);
   color: var(--grey);
