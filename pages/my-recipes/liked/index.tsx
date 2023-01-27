@@ -1,25 +1,21 @@
 import { GetServerSidePropsContext } from "next";
 import { unstable_getServerSession } from "next-auth";
 import { useEffect, useState } from "react";
-import RecipeFilter from "../../components/recipes/RecipeFilter";
-import RecipeList from "../../components/recipes/RecipeList";
-import { getRecipeCollection } from "../../lib/mongodb";
-import { Recipe } from "../add-recipe";
-import { options } from "../api/auth/[...nextauth]";
+import RecipeList from "../../../components/recipes/RecipeList";
+import { getRecipeCollection } from "../../../lib/mongodb";
+import { Recipe } from "../../add-recipe";
+import { options } from "../../api/auth/[...nextauth]";
 
-type MyRecipesProps = {
+type LikedRecipesProps = {
   recipes: Recipe[];
   lastValue: string;
 };
 
-function MyRecipes({ recipes, lastValue }: MyRecipesProps) {
+function Liked({ recipes, lastValue }: LikedRecipesProps) {
   const [recipeList, setRecipeList] = useState<Recipe[]>(recipes);
   const [lastFetchedValue, setLastFetchedValue] = useState(lastValue);
   const [fetching, setFetching] = useState(false);
   const [noMoreItems, setNoMoreItems] = useState(false);
-
-  // const [query, setQuery] = useState("");
-  // const [filter, setFilter] = useState("");
 
   useEffect(() => {
     if (!lastFetchedValue) setNoMoreItems(true);
@@ -46,25 +42,8 @@ function MyRecipes({ recipes, lastValue }: MyRecipesProps) {
     setFetching(false);
   };
 
-  // const handleSearch = (query: string) => {
-  //   setQuery(query);
-  // };
-
-  // const handleFilter = (filter: Filter) => {
-  //   setFilter(filter);
-  // };
-
-  // const searchAndFilter = (items: Recipe[]) => {
-  //   return items.filter((recipe) => {
-  //     return recipe.title.toLowerCase().indexOf(query.toLowerCase()) !== -1;
-  //   });
-  //       return items.filter((item) => {
-  //         return item.recipeCategories?.includes(filter) || item.keywords?.includes(filter)});
-  // };
-
   return (
     <section>
-      {/* <RecipeFilter handler={handleSearch} /> */}
       <RecipeList
         recipes={recipeList}
         fetchRecipes={handleFetch}
@@ -75,7 +54,7 @@ function MyRecipes({ recipes, lastValue }: MyRecipesProps) {
   );
 }
 
-export default MyRecipes;
+export default Liked;
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const session = await unstable_getServerSession(
@@ -95,7 +74,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   let userId = session?.user.id;
   const recipeCollection = await getRecipeCollection();
   let recipes = await recipeCollection
-    .find({ userId: userId })
+    .find({ likes: userId })
     .sort({ _id: -1 })
     .limit(20)
     .toArray();

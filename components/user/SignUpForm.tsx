@@ -6,6 +6,7 @@ import Button from "../ui/Button";
 import FormLayout from "../ui/FormLayout";
 import styles from "./../ui/FormLayout.module.css";
 import Link from "next/link";
+import { FcGoogle } from "react-icons/fc";
 
 function SignUpForm() {
   const [message, setMessage] = useState({ message: "", type: "" });
@@ -77,6 +78,19 @@ function SignUpForm() {
   return (
     <FormLayout handleSubmit={handleRegister}>
       <p className={styles.title}>Sign up for an account</p>
+      <Button
+        addStyle={"google"}
+        type="button"
+        onClick={() =>
+          signIn("google", {
+            redirect: false,
+            callbackUrl: "/",
+          })
+        }
+      >
+        Continue with Google
+        <FcGoogle />
+      </Button>
       <div className={styles.box}>
         <input
           name="email"

@@ -39,9 +39,14 @@
   font-weight: 300;
 }
 
+.chips {
+  display: flex;
+  margin-top: 2rem;
+  gap: 1rem;
+}
+
 .image {
   align-self: center;
-  /* margin-bottom: 30px; */
   position: relative;
   width: 100vw;
   max-width: 100vw;
@@ -74,10 +79,13 @@
 .cooktime {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  flex: 1;
   width: 60%;
-  margin-left: auto;
   font-size: var(--s);
+}
+
+.timetitle {
+  font-weight: 700;
 }
 
 .recipedetails ul {
@@ -96,11 +104,15 @@
   text-decoration: underline;
 }
 
+.recipedetails a svg {
+  vertical-align: text-bottom;
+}
+
 .description {
   font-size: var(--l);
   color: var(--grey);
   padding: 2rem;
-  margin-bottom: 2rem;
+  margin-top: 2rem;
 }
 
 .list {
@@ -123,6 +135,7 @@
     padding: 15px;
   }
   .buttons {
+    margin-top: 3rem;
     padding: 0;
   }
 }

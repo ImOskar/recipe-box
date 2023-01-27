@@ -1,4 +1,5 @@
 import styles from "./Logo.module.css";
+import { MdRestaurantMenu } from "react-icons/md";
 
 type LogoProps = {
   size: string;
@@ -7,7 +8,7 @@ type LogoProps = {
 function Logo({ size }: LogoProps) {
   return (
     <div className={`${styles[size]} ${styles.logo}`}>
-      <i className="material-icons">restaurant_menu</i>
+      <MdRestaurantMenu />
       <p>RECIPE BOX</p>
     </div>
   );

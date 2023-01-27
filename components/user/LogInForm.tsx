@@ -5,6 +5,7 @@ import FormLayout from "../ui/FormLayout";
 import styles from "./../ui/FormLayout.module.css";
 import Router from "next/router";
 import Link from "next/link";
+import { FcGoogle } from "react-icons/fc";
 
 function LogInForm() {
   const [user, setUser] = useState({ email: "", password: "" });
@@ -37,6 +38,19 @@ function LogInForm() {
   return (
     <FormLayout handleSubmit={handleLogin}>
       <p className={styles.title}>Log in to your account</p>
+      <Button
+        addStyle={"google"}
+        type="button"
+        onClick={() =>
+          signIn("google", {
+            redirect: false,
+            callbackUrl: "/",
+          })
+        }
+      >
+        Continue with Google
+        <FcGoogle />
+      </Button>
       <div className={styles.box}>
         <input
           name="email"

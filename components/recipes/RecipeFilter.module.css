@@ -21,23 +21,28 @@
 }
 
 .searchbar {
-  align-self: center;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  border: 1px solid rgb(0, 0, 0, 0.3);
-  outline: 0px solid rgb(0, 0, 0, 0);
-  border-radius: 10px;
-  background-color: #ffff;
   transition: 0.3s;
+  display: flex;
+  flex-flow: column-reverse;
+  justify-content: center;
+  border: 0;
+  width: 100%;
+  border-radius: 5px;
+  padding: 5px 10px 10px;
+  font-size: var(--m);
+  cursor: text;
+  border: 1px solid #eaeaea;
+}
+
+.searchbar:focus-within {
+  border: 1px solid #666;
 }
 
 .searchbar input {
-  background-color: #ffff;
-  border-radius: 10px;
-  color: rgb(0, 0, 0);
-  outline: 0;
   border: 0;
+  outline: 0;
+  color: rgb(0, 0, 0, 0.6);
+  cursor: text;
   font-size: 1rem;
   width: 100%;
   padding: 12px 10px;
@@ -45,9 +50,4 @@
 
 .searchbar i {
   padding-left: 0.5rem;
-}
-
-.searchbar:focus-within {
-  outline: 1px solid var(--blue);
-  border-radius: 10px;
 }

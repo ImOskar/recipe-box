@@ -1,6 +1,7 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import bcrypt from "bcrypt";
 import CredentialsProvider from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import clientPromise, { getUserCollection } from "../../../lib/mongodb";
 import { NextApiRequest, NextApiResponse } from "next";
@@ -13,10 +14,9 @@ export const options: NextAuthOptions = {
     signIn: "/log-in",
   },
   callbacks: {
-    async session({ session, token, user }) {
+    async session({ session, token }) {
       if (session?.user) {
-        let str = token.uid as string;
-        session.user.id = str;
+        session.user.id = token.uid as string;
       }
       return session;
     },
@@ -28,6 +28,10 @@ export const options: NextAuthOptions = {
     },
   },
   providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_ID as string,
+      clientSecret: process.env.GOOGLE_SECRET as string,
+    }),
     CredentialsProvider({
       credentials: {
         email: { type: "email" },

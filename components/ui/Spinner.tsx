@@ -1,4 +1,5 @@
 import styles from "./Spinner.module.css";
+import { MdRestaurantMenu } from "react-icons/md";
 
 type SpinnerProps = {
   style?: string;
@@ -11,7 +12,7 @@ function Spinner({ style }: SpinnerProps) {
         styles[typeof style !== "undefined" ? style : ""]
       }`}
     >
-      <i className="material-icons">restaurant_menu</i>
+      <MdRestaurantMenu />
     </div>
   );
 }

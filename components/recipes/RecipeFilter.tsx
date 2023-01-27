@@ -15,7 +15,7 @@ function RecipeFilter({ handler }: FilterProps) {
   return (
     <section className={styles.container}>
       <div className={styles.heading}>
-        <p>Find the perfect recipe:</p>
+        <p>Find your favorite recipe:</p>
       </div>
       {/* <div className={styles.filters}>
         <p>Breakfast</p>

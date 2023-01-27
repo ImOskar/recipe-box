@@ -38,13 +38,29 @@
   padding: 0;
 }
 
-.like i {
+.like svg {
   color: red;
-  width: 1.5rem;
+  font-size: 1.5rem;
 }
 
 .like:hover {
   background-color: transparent;
+}
+
+.google {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  color: var(--grey);
+  border: 1px solid;
+  font-size: 1rem;
+}
+
+.google:hover {
+  border: 1px solid var(--orange);
+  color: black;
+  background-color: #fff;
 }
 
 .alert,

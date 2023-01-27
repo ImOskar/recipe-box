@@ -1,5 +1,6 @@
 .logo {
   display: flex;
+  align-items: center;
   color: inherit;
   user-select: none;
   font-size: inherit;

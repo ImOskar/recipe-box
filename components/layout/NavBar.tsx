@@ -4,6 +4,7 @@ import styles from "./NavBar.module.css";
 import { useRef, useState } from "react";
 import useOnClickOutside from "../../hooks/useOnClickOutside";
 import Logo from "../ui/Logo";
+import { MdOutlineMenu, MdClose } from "react-icons/md";
 
 function NavBar() {
   const { data: session } = useSession();
@@ -14,15 +15,11 @@ function NavBar() {
   return (
     <header className={styles.header} ref={clickRef}>
       <div className={styles.container}>
-        <Link href="/">
+        <Link href="/" onClick={() => setIsOpen(false)}>
           <Logo size="large" />
         </Link>
         <span className={styles.menu} onClick={() => setIsOpen(!isOpen)}>
-          {isOpen ? (
-            <i className="material-icons">close</i>
-          ) : (
-            <i className="material-icons">menu</i>
-          )}
+          {isOpen ? <MdClose /> : <MdOutlineMenu />}
         </span>
         <nav
           className={isOpen ? styles.nav : styles.navclosed}

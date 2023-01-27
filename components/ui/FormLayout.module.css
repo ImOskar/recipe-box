@@ -36,6 +36,7 @@
   align-self: baseline;
   margin: 2rem 0rem -2rem;
   letter-spacing: 0.05rem;
+  text-transform: uppercase;
 }
 
 .sectiontitle {
@@ -124,9 +125,18 @@
   width: 45%;
 }
 
+.chipbox {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .message {
   margin-top: -1.5rem;
   font-size: var(--s);
+  align-self: flex-start;
 }
 
 .error {

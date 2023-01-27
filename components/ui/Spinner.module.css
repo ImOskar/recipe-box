@@ -4,7 +4,7 @@
   justify-content: center;
 }
 
-.spinner i {
+.spinner svg {
   animation: spin 1.5s infinite;
 }
 
@@ -19,9 +19,6 @@
   background: #00000073;
   color: var(--orange);
   z-index: 1;
-}
-
-.spinnerlrg i {
   font-size: 3rem;
 }
 

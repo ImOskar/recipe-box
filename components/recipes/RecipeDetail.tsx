@@ -8,6 +8,9 @@ import Modal from "../ui/Modal";
 import styles from "./RecipeDetail.module.css";
 import fallbackImage from "../../public/pexels-ella-olsson-1640774.jpg";
 import Link from "next/link";
+import { MdFavoriteBorder, MdFavorite } from "react-icons/md";
+import { TbExternalLink } from "react-icons/tb";
+import Chip from "../ui/Chip";
 
 type DetailProps = {
   recipe: Recipe;
@@ -41,7 +44,7 @@ function RecipeDetail({ recipe, handleDelete, handleLike }: DetailProps) {
     });
   };
 
-  const image =
+  const image: boolean =
     typeof recipe.image !== "undefined" &&
     recipe.image !== "" &&
     "image" in recipe;
@@ -52,11 +55,9 @@ function RecipeDetail({ recipe, handleDelete, handleLike }: DetailProps) {
     else return `${likes.length} likes`;
   };
 
-  const checkIfUndefined = (
-    item: string | number | undefined
-  ): string | number => {
-    if (item) return item;
-    else return "";
+  const checkIfDetails = (item: string | number | undefined): boolean => {
+    if (typeof item !== "undefined" && item !== "") return true;
+    return false;
   };
 
   return (
@@ -65,6 +66,13 @@ function RecipeDetail({ recipe, handleDelete, handleLike }: DetailProps) {
         <h1>{recipe.title}</h1>
         <span></span>
         <h3>By: {recipe.author ? recipe.author : "UNKNOWN"}</h3>
+        <div
+          className={recipe.recipeCategories?.length! >= 1 ? styles.chips : ""}
+        >
+          {recipe.recipeCategories?.map((cat) => {
+            return <Chip key={cat} item={cat} />;
+          })}
+        </div>
       </div>
       <span className={styles.image}>
         <Image
@@ -77,33 +85,41 @@ function RecipeDetail({ recipe, handleDelete, handleLike }: DetailProps) {
       </span>
       <div className={styles.recipedetails}>
         <div className={styles.likescontainer}>
+          <div className={styles.cooktime}>
+            {checkIfDetails(recipe.prepTime) && (
+              <div>
+                <span className={styles.timetitle}>Prep time:</span>
+                <span>{recipe.prepTime}</span>
+              </div>
+            )}
+            {checkIfDetails(recipe.cookTime) && (
+              <div>
+                <span className={styles.timetitle}>Cook time:</span>
+                <span>{recipe.cookTime}</span>
+              </div>
+            )}
+            {checkIfDetails(recipe.totalTime) && (
+              <div>
+                <span className={styles.timetitle}>Total time:</span>
+                <span>{recipe.totalTime}</span>
+              </div>
+            )}
+            {checkIfDetails(recipe.recipeYield) && (
+              <div>
+                <span className={styles.timetitle}>Servings:</span>
+                <span>{recipe.recipeYield}</span>
+              </div>
+            )}
+          </div>
           <div className={styles.likes}>
             <Button addStyle={"like"} onClick={handleUserLike}>
-              <i className="material-icons">
-                {session && likes?.includes(session.user.id)
-                  ? "favorite_filled"
-                  : "favorite_border"}
-              </i>
+              {session && likes?.includes(session.user.id) ? (
+                <MdFavorite />
+              ) : (
+                <MdFavoriteBorder />
+              )}
             </Button>
             <p>{likeCount()}</p>
-          </div>
-          <div className={styles.cooktime}>
-            <p>
-              <span>Prep time:</span>
-              {checkIfUndefined(recipe.prepTime)}
-            </p>
-            <p>
-              <span>Cook time:</span>
-              {checkIfUndefined(recipe.cookTime)}
-            </p>
-            <p>
-              <span>Total time:</span>
-              {checkIfUndefined(recipe.totalTime)}
-            </p>
-            <p>
-              <span>Servings:</span>
-              {checkIfUndefined(recipe.recipeYield)}
-            </p>
           </div>
         </div>
         <div className={styles.seperator}></div>
@@ -127,7 +143,10 @@ function RecipeDetail({ recipe, handleDelete, handleLike }: DetailProps) {
           ))}
         </ul>
         {typeof recipe.url !== "undefined" && recipe.url !== "" && (
-          <Link href={recipe.url}>Original recipe</Link>
+          <Link href={recipe.url}>
+            Original recipe
+            <TbExternalLink />
+          </Link>
         )}
         {session !== null && session?.user.id === recipe.userId && (
           <span className={styles.buttons}>

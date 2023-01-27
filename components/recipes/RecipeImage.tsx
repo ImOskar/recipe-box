@@ -3,6 +3,7 @@ import styles from "./RecipeImage.module.css";
 import { useS3Upload } from "next-s3-upload";
 import { Recipe } from "../../pages/add-recipe";
 import Spinner from "../ui/Spinner";
+import { MdAddAPhoto } from "react-icons/md";
 
 type ImageProps = {
   recipe: Recipe;
@@ -40,7 +41,7 @@ function RecipeImage({ recipe, setImage }: ImageProps) {
     <div className={styles.photobox}>
       <label className={styles.labelbtn} htmlFor="file">
         Upload image
-        <i className="material-icons">add_a_photo</i>
+        <MdAddAPhoto />
         <input
           className={styles.fileinput}
           id="file"

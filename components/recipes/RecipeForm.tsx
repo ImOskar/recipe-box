@@ -1,6 +1,7 @@
 import { FormEvent, useState } from "react";
 import { Recipe } from "../../pages/add-recipe/index";
 import Button from "../ui/Button";
+import Chip from "../ui/Chip";
 import FormLayout from "../ui/FormLayout";
 import styles from "./../ui/FormLayout.module.css";
 import RecipeImage from "./RecipeImage";
@@ -38,6 +39,19 @@ function RecipeForm({
   values = initialValues,
 }: FormProps) {
   const [recipe, setRecipe] = useState<Recipe>(values);
+  const [categories, setCategories] = useState([
+    "Baking",
+    "Breakfast",
+    "Brunch",
+    "Dessert",
+    "Dinner",
+    "Drinks",
+    "Lunch",
+    "Snack",
+  ]);
+  const [selectedCategories, setSelectedCategories] = useState(
+    recipe.recipeCategories!
+  );
 
   const handleChange = (
     e:
@@ -52,16 +66,18 @@ function RecipeForm({
 
   const handleSubmit = (e: FormEvent<Element>) => {
     e.preventDefault();
+    setRecipe({ ...recipe, recipeCategories: selectedCategories });
     handleAddRecipe(recipe);
   };
 
   const stringToArray = (string: string) => string.split("\n");
 
-  const checkValues = (value: string | string[] | undefined) => {
-    if (typeof value !== "undefined" && Array.isArray(value))
-      return value.join("\r\n");
-    if (typeof value !== "undefined") return value;
-    return "";
+  const handleSelectCategory = (name: string) => {
+    if (selectedCategories.includes(name))
+      setSelectedCategories(selectedCategories.filter((cat) => cat !== name));
+    else if (selectedCategories.length === 1 && selectedCategories[0] === "")
+      setSelectedCategories([name]);
+    else setSelectedCategories([...selectedCategories, name]);
   };
 
   return (
@@ -70,7 +86,7 @@ function RecipeForm({
         {edit ? "Edit your recipe" : "Add new recipe"}
       </p>
       {!edit && <RecipeImport setRecipe={setRecipe} />}
-      <p className={styles.subtitle}>Add recipe:</p>
+      <p className={styles.subtitle}>Add recipe</p>
       <div className={styles.sectiontitle}>
         <p>Recipe information (required):</p>
         <div className={styles.seperator}></div>
@@ -92,6 +108,12 @@ function RecipeForm({
           name="ingredients"
           onChange={handleChange}
           value={recipe.ingredients.join("\r\n")}
+          placeholder={[
+            "For example:",
+            "500gr flour",
+            "2 cups sugar",
+            "etc.",
+          ].join("\r\n")}
           rows={15}
           required
         />
@@ -103,6 +125,12 @@ function RecipeForm({
           name="steps"
           onChange={handleChange}
           value={recipe.steps.join("\r\n")}
+          placeholder={[
+            "Find ingredients",
+            "Mix ingredients",
+            "Bake",
+            "Eat",
+          ].join("\r\n")}
           rows={15}
         />
         <label>Instructions</label>
@@ -188,11 +216,27 @@ function RecipeForm({
         />
         <label>Recipe url</label>
       </div>
-
+      <div className={styles.sectiontitle}>
+        <p>Select categories:</p>
+        <div className={styles.seperator}></div>
+      </div>
+      <div className={styles.chipbox}>
+        {categories.map((category) => {
+          return (
+            <Chip
+              key={category}
+              item={category}
+              selectable
+              style={selectedCategories.includes(category) ? "selected" : ""}
+              handleClick={handleSelectCategory}
+            />
+          );
+        })}
+      </div>
+      <div className={styles.seperator}></div>
       {/* <div className={styles.box}>
-        recipeCategories?: string[]; recipeCuisines; keywords?: string[];
+        recipeCuisines; keywords?: string[];
       </div> */}
-
       <Button type="submit" loading={save}>
         Save Recipe
       </Button>
