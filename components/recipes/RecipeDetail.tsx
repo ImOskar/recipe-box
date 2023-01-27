@@ -10,6 +10,7 @@ import fallbackImage from "../../public/pexels-ella-olsson-1640774.jpg";
 import Link from "next/link";
 import { MdFavoriteBorder, MdFavorite } from "react-icons/md";
 import { TbExternalLink } from "react-icons/tb";
+import { MdOutlineDeleteForever, MdEditNote } from "react-icons/md";
 import Chip from "../ui/Chip";
 
 type DetailProps = {
@@ -151,14 +152,14 @@ function RecipeDetail({ recipe, handleDelete, handleLike }: DetailProps) {
         {session !== null && session?.user.id === recipe.userId && (
           <span className={styles.buttons}>
             <Button addStyle={["med", "edit"]} onClick={handleEdit}>
-              <i className="material-icons">edit_note</i>
+              <MdEditNote />
               Edit recipe
             </Button>
             <Button
               addStyle={["med", "alert"]}
               onClick={() => setShowModal(true)}
             >
-              <i className="material-icons">delete</i>
+              <MdOutlineDeleteForever />
               Delete recipe
             </Button>
             {showModal && (
