@@ -1,7 +1,7 @@
 import { GetServerSidePropsContext } from "next";
 import { unstable_getServerSession } from "next-auth";
 import { useEffect, useState } from "react";
-import RecipeFilter from "../../components/recipes/RecipeFilter";
+import RecipeFilter from "../../components/recipes/RecipeSearch";
 import RecipeList from "../../components/recipes/RecipeList";
 import { getRecipeCollection } from "../../lib/mongodb";
 import { Recipe } from "../add-recipe";

@@ -3,24 +3,18 @@ import Image from "next/image";
 import { useSession } from "next-auth/react";
 import backgroundImage from "../public/pexels-ella-olsson-1640774.jpg";
 import { Fragment } from "react";
-import RecipeList from "../components/recipes/RecipeList";
 import styles from "../styles/Home.module.css";
-import RecipeFilter from "../components/recipes/RecipeFilter";
 import Link from "next/link";
 import Logo from "../components/ui/Logo";
 import Button from "../components/ui/Button";
 import { GetServerSidePropsContext } from "next";
 import { unstable_getServerSession } from "next-auth";
 import { options } from "./api/auth/[...nextauth]";
+import RecipeSearch from "../components/recipes/RecipeSearch";
 
 export default function Home() {
   const { data: session } = useSession();
-  // const [query, setQuery] = useState("");
   // const [filter, setFilter] = useState("");
-
-  // const handleSearch = (query: string) => {
-  //   setQuery(query);
-  // };
 
   // const handleFilter = (filter: Filter) => {
   //   setFilter(filter);
@@ -31,7 +25,6 @@ export default function Home() {
   //     return recipe.title.toLowerCase().indexOf(query.toLowerCase()) !== -1;
   //   });
   // };
-  //console.log(session);
 
   return (
     <Fragment>
@@ -55,19 +48,20 @@ export default function Home() {
         <div className={styles.splashtextcontainer}>
           <p className={styles.splashlogo}>Recipe Box</p>
           <p className={styles.splashtext}>All your recipes in one place</p>
+          <RecipeSearch />
           {!session ? (
             <Link href="/register">
               <Button addStyle={["orange", "lrg"]}>Sign up</Button>
             </Link>
           ) : (
-            <Link href="/explore">
-              <Button addStyle={["orange", "lrg"]}>Explore recipes</Button>
-            </Link>
+            <div className={styles.search}>
+              <Link href="/explore">
+                <Button addStyle={["orange", "lrg"]}>Explore recipes</Button>
+              </Link>
+            </div>
           )}
         </div>
       </section>
-      {/* <RecipeFilter handler={handleSearch} />
-      <RecipeList recipes={displayFiltered(recipes)} /> */}
     </Fragment>
   );
 }

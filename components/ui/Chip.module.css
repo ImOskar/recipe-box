@@ -1,5 +1,6 @@
 .chip {
   font-size: 1rem;
+  text-transform: capitalize;
   border-radius: 5px;
   padding: 3px 10px;
   border: 1px solid #eee;

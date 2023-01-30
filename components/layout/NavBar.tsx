@@ -4,11 +4,14 @@ import styles from "./NavBar.module.css";
 import { useRef, useState } from "react";
 import useOnClickOutside from "../../hooks/useOnClickOutside";
 import Logo from "../ui/Logo";
-import { MdOutlineMenu, MdClose } from "react-icons/md";
+import { MdOutlineMenu, MdClose, MdSearch } from "react-icons/md";
+import Button from "../ui/Button";
+import RecipeSearch from "../recipes/RecipeSearch";
 
 function NavBar() {
   const { data: session } = useSession();
   const [isOpen, setIsOpen] = useState(false);
+  // const [showShearch, setShowSearch] = useState(false);
   const clickRef = useRef<HTMLElement>(null);
   useOnClickOutside({ ref: clickRef, callback: setIsOpen });
 
@@ -18,6 +21,14 @@ function NavBar() {
         <Link href="/" onClick={() => setIsOpen(false)}>
           <Logo size="large" />
         </Link>
+        {/* <span>
+          <Button
+            addStyle={"search"}
+            onClick={() => setShowSearch(!showShearch)}
+          >
+            <MdSearch />
+          </Button>
+        </span> */}
         <span className={styles.menu} onClick={() => setIsOpen(!isOpen)}>
           {isOpen ? <MdClose /> : <MdOutlineMenu />}
         </span>
@@ -49,6 +60,7 @@ function NavBar() {
             </>
           )}
         </nav>
+        {/* {showShearch && <RecipeSearch />} */}
       </div>
     </header>
   );

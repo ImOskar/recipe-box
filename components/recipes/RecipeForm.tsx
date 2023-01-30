@@ -39,7 +39,7 @@ function RecipeForm({
   values = initialValues,
 }: FormProps) {
   const [recipe, setRecipe] = useState<Recipe>(values);
-  const [categories, setCategories] = useState([
+  const [categories] = useState([
     "Baking",
     "Breakfast",
     "Brunch",
@@ -49,9 +49,6 @@ function RecipeForm({
     "Lunch",
     "Snack",
   ]);
-  const [selectedCategories, setSelectedCategories] = useState(
-    recipe.recipeCategories!
-  );
 
   const handleChange = (
     e:
@@ -66,18 +63,23 @@ function RecipeForm({
 
   const handleSubmit = (e: FormEvent<Element>) => {
     e.preventDefault();
-    setRecipe({ ...recipe, recipeCategories: selectedCategories });
     handleAddRecipe(recipe);
   };
 
   const stringToArray = (string: string) => string.split("\n");
 
-  const handleSelectCategory = (name: string) => {
-    if (selectedCategories.includes(name))
-      setSelectedCategories(selectedCategories.filter((cat) => cat !== name));
-    else if (selectedCategories.length === 1 && selectedCategories[0] === "")
-      setSelectedCategories([name]);
-    else setSelectedCategories([...selectedCategories, name]);
+  const handleSelectCategory = (categoryName: string) => {
+    let categories = recipe.recipeCategories as string[];
+    if (categories.includes(categoryName))
+      setRecipe({
+        ...recipe,
+        recipeCategories: categories.filter((cat) => cat !== categoryName),
+      });
+    else if (categories.length === 1 && categories[0] === "")
+      setRecipe({ ...recipe, recipeCategories: [categoryName] });
+    else {
+      setRecipe({ ...recipe, recipeCategories: [...categories, categoryName] });
+    }
   };
 
   return (
@@ -86,7 +88,7 @@ function RecipeForm({
         {edit ? "Edit your recipe" : "Add new recipe"}
       </p>
       {!edit && <RecipeImport setRecipe={setRecipe} />}
-      <p className={styles.subtitle}>Add recipe</p>
+      <p className={styles.subtitle}>recipe</p>
       <div className={styles.sectiontitle}>
         <p>Recipe information (required):</p>
         <div className={styles.seperator}></div>
@@ -227,8 +229,14 @@ function RecipeForm({
               key={category}
               item={category}
               selectable
-              style={selectedCategories.includes(category) ? "selected" : ""}
-              handleClick={handleSelectCategory}
+              style={
+                recipe.recipeCategories?.some(
+                  (cat) => cat.toLowerCase() === category.toLowerCase()
+                )
+                  ? "selected"
+                  : ""
+              }
+              handleClick={() => handleSelectCategory(category)}
             />
           );
         })}

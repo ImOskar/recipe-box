@@ -6,9 +6,9 @@ import Link from "next/link";
 
 type ListProps = {
   recipes: Recipe[];
-  fetchRecipes: () => void;
-  fetching: boolean;
-  lastItem: boolean;
+  fetchRecipes?: () => void;
+  fetching?: boolean;
+  lastItem?: boolean;
 };
 
 function RecipeList({ recipes, fetchRecipes, fetching, lastItem }: ListProps) {

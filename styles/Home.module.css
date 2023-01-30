@@ -5,8 +5,14 @@
   width: 100vw;
 }
 
+.search {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .splashcontainer a {
-  margin-top: 3rem;
+  margin-top: 1rem;
 }
 
 .splashimage {
