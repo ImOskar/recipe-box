@@ -1,5 +1,4 @@
 import { getRecipeCollection } from "../../lib/mongodb";
-import { ObjectId } from "mongodb";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { Recipe } from "../add-recipe";
 

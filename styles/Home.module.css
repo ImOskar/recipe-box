@@ -36,9 +36,9 @@
   color: #000000;
   margin: 0;
   text-align: center;
-  font-size: var(--l);
+  font-size: var(--xl);
   font-weight: 200;
-  background: #e9f3f55c;
+  backdrop-filter: blur(10px);
 }
 
 .splashlogo {
@@ -52,5 +52,8 @@
 @media (max-width: 450px) {
   .splashlogo {
     font-size: var(--xxl);
+  }
+  .splashtext {
+    font-size: var(--l);
   }
 }

@@ -5,62 +5,68 @@ import { useRef, useState } from "react";
 import useOnClickOutside from "../../hooks/useOnClickOutside";
 import Logo from "../ui/Logo";
 import { MdOutlineMenu, MdClose, MdSearch } from "react-icons/md";
-import Button from "../ui/Button";
 import RecipeSearch from "../recipes/RecipeSearch";
 
 function NavBar() {
   const { data: session } = useSession();
-  const [isOpen, setIsOpen] = useState(false);
-  // const [showShearch, setShowSearch] = useState(false);
+  const [showNavMenu, setShowNavMenu] = useState(false);
+  const [showShearch, setShowSearch] = useState(false);
   const clickRef = useRef<HTMLElement>(null);
-  useOnClickOutside({ ref: clickRef, callback: setIsOpen });
+  useOnClickOutside({ ref: clickRef, callback: setShowNavMenu });
 
   return (
-    <header className={styles.header} ref={clickRef}>
+    <header className={styles.header}>
       <div className={styles.container}>
-        <Link href="/" onClick={() => setIsOpen(false)}>
+        <Link href="/">
           <Logo size="large" />
         </Link>
-        {/* <span>
-          <Button
-            addStyle={"search"}
-            onClick={() => setShowSearch(!showShearch)}
-          >
-            <MdSearch />
-          </Button>
-        </span> */}
-        <span className={styles.menu} onClick={() => setIsOpen(!isOpen)}>
-          {isOpen ? <MdClose /> : <MdOutlineMenu />}
-        </span>
-        <nav
-          className={isOpen ? styles.nav : styles.navclosed}
-          onClick={() => setIsOpen(false)}
+        <span
+          className={styles.searchbutton}
+          onClick={() => setShowSearch(!showShearch)}
         >
-          <Link href="/explore">
-            <span>Explore</span>
-          </Link>
-          {!session ? (
-            <Link href="/log-in">
-              <span>Sign in</span>
+          <MdSearch />
+        </span>
+        {showShearch && (
+          <div className={styles.searchnav}>
+            <RecipeSearch />{" "}
+          </div>
+        )}
+        <span ref={clickRef}>
+          <span
+            className={styles.menu}
+            onClick={() => setShowNavMenu(!showNavMenu)}
+          >
+            {showNavMenu ? <MdClose /> : <MdOutlineMenu />}
+          </span>
+          <nav
+            className={showNavMenu ? styles.nav : styles.navclosed}
+            onClick={() => setShowNavMenu(false)}
+          >
+            <Link href="/explore">
+              <span>Explore</span>
             </Link>
-          ) : (
-            <>
-              <Link href="/my-recipes">
-                <span>My recipes</span>
+            {!session ? (
+              <Link href="/log-in">
+                <span>Sign in</span>
               </Link>
-              <Link href="/add-recipe">
-                <span>Add Recipe</span>
-              </Link>
-              <span
-                className={styles.signout}
-                onClick={() => signOut({ callbackUrl: "/" })}
-              >
-                Sign out
-              </span>
-            </>
-          )}
-        </nav>
-        {/* {showShearch && <RecipeSearch />} */}
+            ) : (
+              <>
+                <Link href="/my-recipes">
+                  <span>My recipes</span>
+                </Link>
+                <Link href="/add-recipe">
+                  <span>Add Recipe</span>
+                </Link>
+                <span
+                  className={styles.signout}
+                  onClick={() => signOut({ callbackUrl: "/" })}
+                >
+                  Sign out
+                </span>
+              </>
+            )}
+          </nav>
+        </span>
       </div>
     </header>
   );

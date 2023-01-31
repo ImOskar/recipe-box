@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import RecipeList from "../../../components/recipes/RecipeList";
@@ -32,6 +33,10 @@ function Search() {
 
   return (
     <div>
+      <Head>
+        <title>Search results</title>
+        <meta name="explore" content="Save all your recipes in one place!" />
+      </Head>
       {loading && <Spinner style={"spinnerlrg"} />}
       {!searchResult.length && !loading && <p>Found 0 matches for: {query}</p>}
       {!!searchResult.length && (

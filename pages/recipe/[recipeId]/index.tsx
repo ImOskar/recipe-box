@@ -6,6 +6,7 @@ import { Recipe } from "../../add-recipe";
 import { GetServerSidePropsContext } from "next";
 import { useState } from "react";
 import Spinner from "../../../components/ui/Spinner";
+import Head from "next/head";
 
 type DetailProps = {
   recipe: Recipe;
@@ -51,6 +52,10 @@ function RecipeDetailPage({ recipe }: DetailProps) {
 
   return (
     <section>
+      <Head>
+        <title>{recipe.title}</title>
+        <meta name="explore" content="Save all your recipes in one place!" />
+      </Head>
       {loading && <Spinner style="spinnerlrg" />}
       <RecipeDetail
         recipe={recipe}

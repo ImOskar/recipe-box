@@ -1,3 +1,4 @@
+import Head from "next/head";
 import SignUpForm from "../../components/user/SignUpForm";
 
 export type User = {
@@ -10,6 +11,10 @@ export type User = {
 function RegisterPage() {
   return (
     <section>
+      <Head>
+        <title>Sign up</title>
+        <meta name="explore" content="Save all your recipes in one place!" />
+      </Head>
       <SignUpForm />
     </section>
   );

@@ -7,6 +7,7 @@ import { Recipe } from "../../add-recipe";
 import { useState } from "react";
 import { options } from "../../api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth";
+import Head from "next/head";
 
 type EditProps = {
   recipe: Recipe;
@@ -34,6 +35,10 @@ function EditRecipe({ recipe }: EditProps) {
 
   return (
     <section>
+      <Head>
+        <title>Edit recipe</title>
+        <meta name="explore" content="Save all your recipes in one place!" />
+      </Head>
       <RecipeForm
         handleAddRecipe={handleEditReciepe}
         edit

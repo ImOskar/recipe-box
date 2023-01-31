@@ -6,6 +6,7 @@ import RecipeList from "../../components/recipes/RecipeList";
 import { getRecipeCollection } from "../../lib/mongodb";
 import { Recipe } from "../add-recipe";
 import { options } from "../api/auth/[...nextauth]";
+import Head from "next/head";
 
 type MyRecipesProps = {
   recipes: Recipe[];
@@ -55,15 +56,16 @@ function MyRecipes({ recipes, lastValue }: MyRecipesProps) {
   // };
 
   // const searchAndFilter = (items: Recipe[]) => {
-  //   return items.filter((recipe) => {
-  //     return recipe.title.toLowerCase().indexOf(query.toLowerCase()) !== -1;
-  //   });
   //       return items.filter((item) => {
   //         return item.recipeCategories?.includes(filter) || item.keywords?.includes(filter)});
   // };
 
   return (
     <section>
+      <Head>
+        <title>My recipes</title>
+        <meta name="explore" content="Save all your recipes in one place!" />
+      </Head>
       {/* <RecipeFilter handler={handleSearch} /> */}
       <RecipeList
         recipes={recipeList}

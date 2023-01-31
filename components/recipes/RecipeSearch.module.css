@@ -7,6 +7,10 @@
   margin-bottom: 3rem;
 }
 
+.searchbar form {
+  display: contents;
+}
+
 .searchbar input {
   border: 0;
   outline: 0;
@@ -17,7 +21,3 @@
   height: 100%;
   padding: 6px;
 }
-
-/* .searchbar:focus-within {
-  border: 1px solid #666;
-} */

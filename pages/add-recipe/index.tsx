@@ -5,6 +5,7 @@ import { GetServerSidePropsContext } from "next";
 import { useState } from "react";
 import { unstable_getServerSession } from "next-auth";
 import { options } from "../api/auth/[...nextauth]";
+import Head from "next/head";
 
 export type Recipe = {
   id: string;
@@ -50,6 +51,10 @@ function AddRecipePage() {
 
   return (
     <section>
+      <Head>
+        <title>Add recipe</title>
+        <meta name="explore" content="Save all your recipes in one place!" />
+      </Head>
       <RecipeForm handleAddRecipe={handleAddRecipe} save={savingRecipe} />
     </section>
   );

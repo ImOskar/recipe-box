@@ -123,7 +123,6 @@ function RecipeDetail({ recipe, handleDelete, handleLike }: DetailProps) {
             <p>{likeCount()}</p>
           </div>
         </div>
-        <div className={styles.seperator}></div>
         <p className={styles.description}>{recipe.description}</p>
         <div className={styles.sectiontitle}>
           <p>Ingredients:</p>

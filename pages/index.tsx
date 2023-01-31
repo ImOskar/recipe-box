@@ -14,17 +14,6 @@ import RecipeSearch from "../components/recipes/RecipeSearch";
 
 export default function Home() {
   const { data: session } = useSession();
-  // const [filter, setFilter] = useState("");
-
-  // const handleFilter = (filter: Filter) => {
-  //   setFilter(filter);
-  // };
-
-  // const displayFiltered = (items: Recipe[]) => {
-  //   return items.filter((recipe) => {
-  //     return recipe.title.toLowerCase().indexOf(query.toLowerCase()) !== -1;
-  //   });
-  // };
 
   return (
     <Fragment>

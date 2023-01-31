@@ -42,7 +42,38 @@
   cursor: pointer;
 }
 
-@media (max-width: 600px) {
+.searchbutton {
+  font-size: 1.5rem;
+  margin-left: auto;
+  display: inline-flex;
+  margin-right: 0.5rem;
+  cursor: pointer;
+}
+
+.searchnav {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: 4.5rem;
+  right: 0;
+  width: 100%;
+  padding: 0.5rem;
+}
+
+.searchnav div {
+  margin-bottom: 0;
+}
+
+.searchnav div input {
+  border: 1px solid #eaeaea;
+  border-radius: 5px 0px 0px 5px;
+}
+
+.searchnav div input:focus-within {
+  border: 1px solid #666;
+}
+
+@media (max-width: 650px) {
   .menu {
     display: flex;
     font-size: 1.5rem;

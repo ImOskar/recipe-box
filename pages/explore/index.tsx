@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { useState } from "react";
 import RecipeList from "../../components/recipes/RecipeList";
 import { getRecipeCollection } from "../../lib/mongodb";
@@ -37,6 +38,11 @@ function Explore({ recipes, lastValue }: ExploreProps) {
 
   return (
     <section>
+      <Head>
+        <title>Explore recipes</title>
+        <meta name="explore" content="Save all your recipes in one place!" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <RecipeList
         recipes={recipeList}
         fetchRecipes={handleFetch}
