@@ -66,7 +66,7 @@ function RecipeDetail({ recipe, handleDelete, handleLike }: DetailProps) {
       <div className={styles.recipeheader}>
         <h1>{recipe.title}</h1>
         <span></span>
-        <h3>By: {recipe.author ? recipe.author : "UNKNOWN"}</h3>
+        {recipe.author && <h3>By: {recipe.author}</h3>}
         <div
           className={recipe.recipeCategories?.length! >= 1 ? styles.chips : ""}
         >

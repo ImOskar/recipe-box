@@ -11,9 +11,10 @@ import Head from "next/head";
 type MyRecipesProps = {
   recipes: Recipe[];
   lastValue: string;
+  user: string;
 };
 
-function MyRecipes({ recipes, lastValue }: MyRecipesProps) {
+function MyRecipes({ recipes, lastValue, user }: MyRecipesProps) {
   const [recipeList, setRecipeList] = useState<Recipe[]>(recipes);
   const [lastFetchedValue, setLastFetchedValue] = useState(lastValue);
   const [fetching, setFetching] = useState(false);
@@ -32,7 +33,7 @@ function MyRecipes({ recipes, lastValue }: MyRecipesProps) {
     }
     setFetching(true);
     const res = await fetch(
-      `/api/recipes?lastValue=${lastFetchedValue}&limit=20`,
+      `/api/recipes?lastValue=${lastFetchedValue}&limit=20&key=userId&value=${user}`,
       {
         method: "GET",
         headers: {
@@ -123,6 +124,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     props: {
       recipes: recipeList,
       lastValue: lastValue,
+      user: userId,
     },
   };
 }

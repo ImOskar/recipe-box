@@ -27,10 +27,19 @@ export default async function handler(
       } catch (error) {}
       break;
     case "GET":
-      let { lastValue, limit } = req.query;
+      let { lastValue, limit, key, value } = req.query;
+      let filter;
+      if (key) {
+        filter = {
+          $and: [
+            { _id: { $lt: new ObjectId(lastValue?.toString()) } },
+            { [key as string]: value },
+          ],
+        };
+      } else filter = { _id: { $lt: new ObjectId(lastValue?.toString()) } };
       try {
         let result = await recipeCollection
-          .find({ _id: { $lt: new ObjectId(lastValue?.toString()) } })
+          .find(filter)
           .sort({ _id: -1 })
           .limit(Number(limit))
           .toArray();
@@ -49,6 +58,7 @@ export default async function handler(
             userId: recipe.userId,
           };
         });
+        console.log("result: " + JSON.stringify(result));
         res.status(201).json({ recipes: recipes, endValue: endValue });
       } catch (error) {
         console.log(error);
