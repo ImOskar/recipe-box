@@ -56,11 +56,6 @@ function RecipeDetail({ recipe, handleDelete, handleLike }: DetailProps) {
     else return `${likes.length} likes`;
   };
 
-  const checkIfDetails = (item: string | number | undefined): boolean => {
-    if (typeof item !== "undefined" && item !== "") return true;
-    return false;
-  };
-
   return (
     <div className={styles.wrapper}>
       <div className={styles.recipeheader}>
@@ -87,25 +82,25 @@ function RecipeDetail({ recipe, handleDelete, handleLike }: DetailProps) {
       <div className={styles.recipedetails}>
         <div className={styles.likescontainer}>
           <div className={styles.cooktime}>
-            {checkIfDetails(recipe.prepTime) && (
+            {recipe.prepTime && (
               <div>
                 <span className={styles.timetitle}>Prep time:</span>
                 <span>{recipe.prepTime}</span>
               </div>
             )}
-            {checkIfDetails(recipe.cookTime) && (
+            {recipe.cookTime && (
               <div>
                 <span className={styles.timetitle}>Cook time:</span>
                 <span>{recipe.cookTime}</span>
               </div>
             )}
-            {checkIfDetails(recipe.totalTime) && (
+            {recipe.totalTime && (
               <div>
                 <span className={styles.timetitle}>Total time:</span>
                 <span>{recipe.totalTime}</span>
               </div>
             )}
-            {checkIfDetails(recipe.recipeYield) && (
+            {recipe.recipeYield && (
               <div>
                 <span className={styles.timetitle}>Servings:</span>
                 <span>{recipe.recipeYield}</span>
@@ -123,7 +118,9 @@ function RecipeDetail({ recipe, handleDelete, handleLike }: DetailProps) {
             <p>{likeCount()}</p>
           </div>
         </div>
-        <p className={styles.description}>{recipe.description}</p>
+        {recipe.description && (
+          <p className={styles.description}>{recipe.description}</p>
+        )}
         <div className={styles.sectiontitle}>
           <p>Ingredients:</p>
           <div className={styles.seperator}></div>

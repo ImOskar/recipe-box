@@ -58,8 +58,7 @@ export default async function handler(
             userId: recipe.userId,
           };
         });
-        console.log("result: " + JSON.stringify(result));
-        res.status(201).json({ recipes: recipes, endValue: endValue });
+        res.status(200).json({ recipes: recipes, endValue: endValue });
       } catch (error) {
         console.log(error);
       }
@@ -69,7 +68,7 @@ export default async function handler(
         let result = await recipeCollection.deleteOne({
           _id: new ObjectId(data),
         });
-        res.status(201).json({ message: "Recipe deleted", ...result });
+        res.status(200).json({ message: "Recipe deleted", ...result });
       } catch (error) {}
       break;
     default:
