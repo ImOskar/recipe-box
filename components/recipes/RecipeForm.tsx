@@ -134,6 +134,7 @@ function RecipeForm({
             "Eat",
           ].join("\r\n")}
           rows={15}
+          required
         />
         <label>Instructions</label>
       </div>

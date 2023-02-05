@@ -27,8 +27,12 @@
 
 .container nav span {
   padding: 0 0.5rem;
-  border-left: 1px solid;
   user-select: none;
+}
+
+.container nav span:hover,
+.searchbutton:hover {
+  color: var(--orange);
 }
 
 .menu {

@@ -30,9 +30,9 @@ function SignUpForm() {
     if (user.password !== verifyPassword) {
       setMessage({ message: "Passwords don't match.", type: "error" });
       return false;
-    } else if (user.password.length < 7) {
+    } else if (user.password.length < 5) {
       setMessage({
-        message: "Password needs to be at least 7 characters.",
+        message: "Password needs to be at least 5 characters.",
         type: "error",
       });
       return false;
