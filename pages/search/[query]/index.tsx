@@ -29,7 +29,7 @@ function Search() {
       }
     };
     searchRecipes();
-  }, []);
+  }, [query]);
 
   return (
     <div>
