@@ -45,11 +45,6 @@ function RecipeDetail({ recipe, handleDelete, handleLike }: DetailProps) {
     });
   };
 
-  const image: boolean =
-    typeof recipe.image !== "undefined" &&
-    recipe.image !== "" &&
-    "image" in recipe;
-
   const likeCount = (): string => {
     if (!likes) return "0 likes";
     else if (likes.length === 1) return `${likes.length} like`;
@@ -72,7 +67,7 @@ function RecipeDetail({ recipe, handleDelete, handleLike }: DetailProps) {
       </div>
       <span className={styles.image}>
         <Image
-          src={image ? recipe.image! : fallbackImage}
+          src={recipe.image ? recipe.image : fallbackImage}
           alt="Recipe image"
           fill
           priority

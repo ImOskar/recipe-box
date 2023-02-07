@@ -50,7 +50,7 @@ function RecipeImage({ recipe, setImage }: ImageProps) {
           onChange={handleFileInput}
         ></input>
       </label>
-      {recipe.image !== "" && <img src={recipe.image} alt="Upload image" />}
+      {recipe.image && <img src={recipe.image} alt="Upload image" />}
       {uploading && <Spinner />}
       <p className={styles.message}>{message}</p>
     </div>
