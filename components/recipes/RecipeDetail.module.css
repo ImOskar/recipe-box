@@ -60,13 +60,13 @@
 }
 
 .recipedetails {
-  width: min(600px, 90%);
+  width: min(600px, 100%);
   font-size: 20px;
 }
 
 .likescontainer {
   display: flex;
-  margin: 0.5rem;
+  margin: 0.5rem 0;
 }
 
 .likes {
@@ -139,7 +139,10 @@
     padding: 0;
   }
   .description {
-    padding: 0;
+    padding: 0.5rem;
+  }
+  .recipedetails ul {
+    margin-left: 2rem;
   }
 }
 

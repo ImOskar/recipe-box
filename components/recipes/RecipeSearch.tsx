@@ -4,14 +4,20 @@ import { MdSearch } from "react-icons/md";
 import styles from "./RecipeSearch.module.css";
 import React, { useEffect, useRef, useState } from "react";
 
-function RecipeSearch() {
+type SearchProps = {
+  focused?: boolean;
+};
+
+function RecipeSearch({ focused }: SearchProps) {
   const searchRef = useRef<HTMLInputElement>(null);
   const [query, setQuery] = useState("");
   const router = useRouter();
 
   useEffect(() => {
-    searchRef.current!.focus();
-  }, []);
+    if (focused) {
+      searchRef.current!.focus();
+    }
+  }, [focused]);
 
   const handleSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();

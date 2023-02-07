@@ -28,7 +28,7 @@ function NavBar() {
         </span>
         {showShearch && (
           <div className={styles.searchnav}>
-            <RecipeSearch />{" "}
+            <RecipeSearch focused />{" "}
           </div>
         )}
         <span ref={clickRef}>
