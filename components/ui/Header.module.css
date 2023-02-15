@@ -1,0 +1,9 @@
+.header {
+  color: rgb(30, 30, 30);
+  font-size: var(--xxl);
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 3rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3rem;
+}

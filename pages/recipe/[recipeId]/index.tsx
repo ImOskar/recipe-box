@@ -1,12 +1,11 @@
 import { useRouter } from "next/router";
 import RecipeDetail from "../../../components/recipes/RecipeDetail";
-import { getRecipeCollection } from "../../../lib/mongodb";
-import { ObjectId } from "mongodb";
 import { Recipe } from "../../add-recipe";
 import { GetServerSidePropsContext } from "next";
 import { useState } from "react";
 import Spinner from "../../../components/ui/Spinner";
 import Head from "next/head";
+import { getRecipeServerSide } from "../../../lib/utils";
 
 type DetailProps = {
   recipe: Recipe;
@@ -50,6 +49,10 @@ function RecipeDetailPage({ recipe }: DetailProps) {
     } catch (error) {}
   };
 
+  const handleCategory = (category: string) => {
+    router.push(`/explore/${category}`);
+  };
+
   return (
     <section>
       <Head>
@@ -61,6 +64,7 @@ function RecipeDetailPage({ recipe }: DetailProps) {
         recipe={recipe}
         handleDelete={handleDelete}
         handleLike={handleLike}
+        handleCategory={handleCategory}
       />
     </section>
   );
@@ -70,11 +74,8 @@ export default RecipeDetailPage;
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const id = context.params?.recipeId as string;
-  const recipeCollection = await getRecipeCollection();
-  let result = await recipeCollection.findOne({ _id: new ObjectId(id) });
-  let recipe = { ...result };
-  recipe.id = result?._id.toString();
-  delete recipe._id;
+  const recipe = await getRecipeServerSide(id);
+
   return {
     props: {
       recipe: recipe,

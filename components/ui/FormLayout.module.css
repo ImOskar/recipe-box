@@ -125,7 +125,7 @@
   width: 45%;
 }
 
-.chipbox {
+.tagbox {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;

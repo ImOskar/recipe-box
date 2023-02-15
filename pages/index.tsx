@@ -5,7 +5,6 @@ import backgroundImage from "../public/pexels-ella-olsson-1640774.jpg";
 import { Fragment } from "react";
 import styles from "../styles/Home.module.css";
 import Link from "next/link";
-import Logo from "../components/ui/Logo";
 import Button from "../components/ui/Button";
 import { GetServerSidePropsContext } from "next";
 import { unstable_getServerSession } from "next-auth";
@@ -44,7 +43,7 @@ export default function Home() {
             </Link>
           ) : (
             <div className={styles.search}>
-              <Link href="/explore">
+              <Link href="/explore/all">
                 <Button addStyle={["orange", "lrg"]}>Explore recipes</Button>
               </Link>
             </div>

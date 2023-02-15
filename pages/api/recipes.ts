@@ -27,25 +27,23 @@ export default async function handler(
       } catch (error) {}
       break;
     case "GET":
-      let { lastValue, limit, key, value } = req.query;
-      let filter;
-      if (key) {
-        filter = {
-          $and: [
-            { _id: { $lt: new ObjectId(lastValue?.toString()) } },
-            { [key as string]: value },
-          ],
-        };
-      } else filter = { _id: { $lt: new ObjectId(lastValue?.toString()) } };
+      let { lastValue, limit, key, value, user, id } = req.query;
+      const filters = getFilters(
+        lastValue as string,
+        key as string,
+        value as string,
+        user as string,
+        id as string
+      );
       try {
-        let result = await recipeCollection
-          .find(filter)
+        const result = await recipeCollection
+          .find(filters)
           .sort({ _id: -1 })
           .limit(Number(limit))
           .toArray();
         let endValue;
         if (result.length < Number(limit)) {
-          endValue = null;
+          endValue = "";
         } else endValue = result.slice(-1)[0]._id;
         let recipes: Recipe[] = result.map((recipe) => {
           return {
@@ -75,3 +73,21 @@ export default async function handler(
       res.status(405).end();
   }
 }
+
+const getFilters = (
+  lastValue: string,
+  key: string,
+  value: string,
+  user: string,
+  id: string
+) => {
+  let filter = [];
+  if (lastValue) {
+    filter.push({ _id: { $lt: new ObjectId(lastValue?.toString()) } });
+  }
+  if (user) filter.push({ [user as string]: id });
+  if (key) filter.push({ [key as string]: { $regex: new RegExp(value, "i") } });
+  if (!filter.length) return {};
+  else if (filter.length === 1) return filter[0];
+  else return { $and: filter };
+};

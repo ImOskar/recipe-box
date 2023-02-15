@@ -1,4 +1,4 @@
-.chip {
+.tag {
   font-size: 1rem;
   text-transform: capitalize;
   border-radius: 5px;
@@ -11,6 +11,7 @@
   cursor: pointer;
 }
 
+.selectable:hover,
 .selected {
   background-color: var(--orange);
   color: #fff;

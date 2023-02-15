@@ -37,7 +37,6 @@ function RecipeImport({ setRecipe }: ImportProps) {
     if (typeof data !== "undefined" && data.message === "success") {
       let parsedRecipe = data.data;
       const rec = {
-        id: "0",
         title: parsedRecipe.name,
         description: checkValue(parsedRecipe.description),
         steps: parsedRecipe.recipeInstructions,

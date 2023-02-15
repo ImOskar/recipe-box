@@ -7,7 +7,7 @@ import fallback from "../../public/pexels-ella-olsson-1640774.jpg";
 function RecipeCard(recipe: Recipe) {
   return (
     <div className={styles.card}>
-      <Link href={"/recipe/" + recipe.id}>
+      <Link href={"/recipe/" + recipe.id!}>
         <span>
           <Image
             src={recipe.image ? recipe.image : fallback}

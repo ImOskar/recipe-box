@@ -1,11 +1,12 @@
 import { FormEvent, useState } from "react";
 import { Recipe } from "../../pages/add-recipe/index";
 import Button from "../ui/Button";
-import Chip from "../ui/Chip";
+import Tag from "../ui/Tag";
 import FormLayout from "../ui/FormLayout";
 import styles from "./../ui/FormLayout.module.css";
 import RecipeImage from "./RecipeImage";
 import RecipeImport from "./RecipeImport";
+import { INITIAL_FORM_VALUES, RECIPE_CATEGORIES } from "../../lib/constants";
 
 type FormProps = {
   handleAddRecipe: (data: Recipe) => void;
@@ -14,41 +15,14 @@ type FormProps = {
   values?: Recipe;
 };
 
-const initialValues = {
-  id: "",
-  title: "",
-  description: "",
-  image: "",
-  steps: [""],
-  ingredients: [""],
-  cookTime: "",
-  prepTime: "",
-  totalTime: "",
-  recipeYield: "",
-  recipeCategories: [""],
-  keywords: [""],
-  url: "",
-  userId: "",
-  author: "",
-};
-
 function RecipeForm({
   handleAddRecipe,
   save,
   edit,
-  values = initialValues,
+  values = INITIAL_FORM_VALUES,
 }: FormProps) {
   const [recipe, setRecipe] = useState<Recipe>(values);
-  const [categories] = useState([
-    "Baking",
-    "Breakfast",
-    "Brunch",
-    "Dessert",
-    "Dinner",
-    "Drinks",
-    "Lunch",
-    "Snack",
-  ]);
+  const [categories] = useState(RECIPE_CATEGORIES);
 
   const handleChange = (
     e:
@@ -130,7 +104,7 @@ function RecipeForm({
           placeholder={[
             "Find ingredients",
             "Mix ingredients",
-            "Bake",
+            "Cook",
             "Eat",
           ].join("\r\n")}
           rows={15}
@@ -223,10 +197,10 @@ function RecipeForm({
         <p>Select categories:</p>
         <div className={styles.seperator}></div>
       </div>
-      <div className={styles.chipbox}>
+      <div className={styles.tagbox}>
         {categories.map((category) => {
           return (
-            <Chip
+            <Tag
               key={category}
               item={category}
               selectable

@@ -42,7 +42,7 @@ function NavBar() {
             className={showNavMenu ? styles.nav : styles.navclosed}
             onClick={() => setShowNavMenu(false)}
           >
-            <Link href="/explore">
+            <Link href="/explore/all">
               <span>Explore</span>
             </Link>
             {!session ? (
@@ -51,7 +51,7 @@ function NavBar() {
               </Link>
             ) : (
               <>
-                <Link href="/my-recipes">
+                <Link href="/my-recipes/all">
                   <span>My recipes</span>
                 </Link>
                 <Link href="/add-recipe">

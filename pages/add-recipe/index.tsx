@@ -8,7 +8,7 @@ import { options } from "../api/auth/[...nextauth]";
 import Head from "next/head";
 
 export type Recipe = {
-  id: string;
+  id?: string;
   title: string;
   description?: string;
   image?: string;

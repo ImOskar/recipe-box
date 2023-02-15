@@ -1,0 +1,30 @@
+export const RECIPE_CATEGORIES = [
+  "Baking",
+  "Breakfast",
+  "Brunch",
+  "Dessert",
+  "Dinner",
+  "Drinks",
+  "Lunch",
+  "Main",
+  "Side",
+  "Snack",
+];
+
+export const INITIAL_FORM_VALUES = {
+  id: "",
+  title: "",
+  description: "",
+  image: "",
+  steps: [""],
+  ingredients: [""],
+  cookTime: "",
+  prepTime: "",
+  totalTime: "",
+  recipeYield: "",
+  recipeCategories: [""],
+  keywords: [""],
+  url: "",
+  userId: "",
+  author: "",
+};

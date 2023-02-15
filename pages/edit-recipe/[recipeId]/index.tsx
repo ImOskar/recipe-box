@@ -1,13 +1,12 @@
 import { useRouter } from "next/router";
 import { GetServerSidePropsContext } from "next/types";
 import RecipeForm from "../../../components/recipes/RecipeForm";
-import { getRecipeCollection } from "../../../lib/mongodb";
-import { ObjectId } from "mongodb";
 import { Recipe } from "../../add-recipe";
 import { useState } from "react";
 import { options } from "../../api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth";
 import Head from "next/head";
+import { getRecipeServerSide } from "../../../lib/utils";
 
 type EditProps = {
   recipe: Recipe;
@@ -58,13 +57,9 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     options
   );
   const id = context.params?.recipeId as string;
-  const recipeCollection = await getRecipeCollection();
-  let result = await recipeCollection.findOne({ _id: new ObjectId(id) });
-  let recipe = { ...result };
-  recipe.id = result?._id.toString();
-  delete recipe._id;
+  const recipe = await getRecipeServerSide(id);
 
-  if (session === null || session.user.id !== result?.userId) {
+  if (session === null || session.user.id !== recipe?.userId) {
     return {
       redirect: {
         permanent: false,

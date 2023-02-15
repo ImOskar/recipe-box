@@ -1,16 +1,16 @@
-import styles from "./Chip.module.css";
+import styles from "./Tag.module.css";
 
-type ChipProps = {
+type TagProps = {
   item: string;
   style?: string;
   selectable?: boolean;
   handleClick?: (id: string) => void;
 };
 
-function Chip({ item, style, selectable, handleClick }: ChipProps) {
+function Tag({ item, style, selectable, handleClick }: TagProps) {
   return (
     <div
-      className={`${styles.chip} ${styles[style ? style : ""]} ${
+      className={`${styles.tag} ${styles[style ? style : ""]} ${
         selectable && styles.selectable
       }`}
       onClick={() => handleClick && handleClick(item)}
@@ -20,4 +20,4 @@ function Chip({ item, style, selectable, handleClick }: ChipProps) {
   );
 }
 
-export default Chip;
+export default Tag;

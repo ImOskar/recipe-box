@@ -39,7 +39,7 @@
   font-weight: 300;
 }
 
-.chips {
+.tags {
   display: flex;
   margin-top: 2rem;
   gap: 1rem;

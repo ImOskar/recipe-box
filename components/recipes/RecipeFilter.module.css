@@ -1,0 +1,10 @@
+.filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  width: max(350px, 70%);
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  margin-bottom: 2rem;
+}

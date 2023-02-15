@@ -11,22 +11,28 @@ import Link from "next/link";
 import { MdFavoriteBorder, MdFavorite } from "react-icons/md";
 import { TbExternalLink } from "react-icons/tb";
 import { MdOutlineDeleteForever, MdEditNote } from "react-icons/md";
-import Chip from "../ui/Chip";
+import Tag from "../ui/Tag";
 
 type DetailProps = {
   recipe: Recipe;
   handleDelete: () => Promise<void>;
   handleLike: (id: string) => void;
+  handleCategory: (id: string) => void;
 };
 
-function RecipeDetail({ recipe, handleDelete, handleLike }: DetailProps) {
+function RecipeDetail({
+  recipe,
+  handleDelete,
+  handleLike,
+  handleCategory,
+}: DetailProps) {
   const { data: session } = useSession();
   const [showModal, setShowModal] = useState(false);
   const [likes, setLikes] = useState(recipe.likes);
   const router = useRouter();
 
   const handleEdit = () => {
-    router.push(`/edit-recipe/${recipe.id}`);
+    router.push(`/edit-recipe/${recipe.id!}`);
   };
 
   const handleUserLike = () => {
@@ -58,10 +64,17 @@ function RecipeDetail({ recipe, handleDelete, handleLike }: DetailProps) {
         <span></span>
         {recipe.author && <h3>By: {recipe.author}</h3>}
         <div
-          className={recipe.recipeCategories?.length! >= 1 ? styles.chips : ""}
+          className={recipe.recipeCategories?.length! >= 1 ? styles.tags : ""}
         >
           {recipe.recipeCategories?.map((cat) => {
-            return <Chip key={cat} item={cat} />;
+            return (
+              <Tag
+                key={cat}
+                item={cat}
+                handleClick={() => handleCategory(cat)}
+                selectable
+              />
+            );
           })}
         </div>
       </div>
@@ -71,7 +84,6 @@ function RecipeDetail({ recipe, handleDelete, handleLike }: DetailProps) {
           alt="Recipe image"
           fill
           priority
-          //placeholder="blur"
         />
       </span>
       <div className={styles.recipedetails}>

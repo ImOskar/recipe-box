@@ -17,7 +17,7 @@ function RecipeList({ recipes, fetchRecipes, fetching, lastItem }: ListProps) {
       <section className={styles.recipelist}>
         {!recipes.length && (
           <div className={styles.empty}>
-            <p>Looks like you should start adding recipes!</p>
+            <p>No recipes in this category yet!</p>
             <Link href={"/add-recipe"}>Add recipe</Link>
           </div>
         )}
