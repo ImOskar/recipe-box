@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import { Recipe } from "../../pages/add-recipe";
 import Button from "../ui/Button";
+import { MdInfoOutline } from "react-icons/md";
 import styles from "./../ui/FormLayout.module.css";
 
 type ImportProps = {
@@ -67,6 +68,16 @@ function RecipeImport({ setRecipe }: ImportProps) {
 
   return (
     <>
+      <div className={styles.tooltipcontainer}>
+        <p className={styles.subtitle}>import recipe</p>
+        <div className={styles.tooltip}>
+          <MdInfoOutline />
+        </div>
+        <span className={styles.tooltiptext}>
+          Paste recipe url and try importing recipe.
+          <br /> Note: not all recipe-sites are supported.
+        </span>
+      </div>
       <div className={styles.box}>
         <input
           className={styles.input}

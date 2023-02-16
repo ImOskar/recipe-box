@@ -60,7 +60,7 @@ function RecipeDetail({
   return (
     <div className={styles.wrapper}>
       <div className={styles.recipeheader}>
-        <h1>{recipe.title}</h1>
+        <h1 lang="en">{recipe.title}</h1>
         <span></span>
         {recipe.author && <h3>By: {recipe.author}</h3>}
         <div

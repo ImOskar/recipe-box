@@ -25,6 +25,8 @@
   font-size: var(--xxl);
   font-weight: 700;
   margin-bottom: 1rem;
+  word-break: break-word;
+  hyphens: auto;
 }
 
 .recipeheader > span {
@@ -41,6 +43,8 @@
 
 .tags {
   display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
   margin-top: 2rem;
   gap: 1rem;
 }

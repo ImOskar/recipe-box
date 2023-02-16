@@ -146,3 +146,34 @@
 .success {
   color: #44f34c;
 }
+
+.tooltipcontainer {
+  position: relative;
+  width: inherit;
+  display: inline-flex;
+  justify-content: space-between;
+}
+
+.tooltip {
+  align-self: baseline;
+  margin: 2rem 0rem -2rem;
+}
+
+.tooltiptext {
+  visibility: hidden;
+  width: 200px;
+  background-color: #fff;
+  color: var(--grey);
+  border: 1px solid #eee;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: var(--m);
+  position: absolute;
+  right: 1rem;
+  top: 3.1rem;
+  z-index: 1;
+}
+
+.tooltip:hover + .tooltiptext {
+  visibility: visible;
+}
