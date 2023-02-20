@@ -11,7 +11,15 @@
   cursor: pointer;
 }
 
-.selectable:hover,
+@media (hover: hover) {
+  .selectable:hover {
+    background-color: var(--orange);
+    color: #fff;
+    border: none;
+    margin: 1px;
+  }
+}
+
 .selected {
   background-color: var(--orange);
   color: #fff;
