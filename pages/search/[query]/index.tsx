@@ -38,7 +38,11 @@ function Search() {
         <meta name="explore" content="Save all your recipes in one place!" />
       </Head>
       {loading && <Spinner style={"spinnerlrg"} />}
-      {!searchResult.length && !loading && <p>Found 0 matches for: {query}</p>}
+      {!loading && (
+        <p style={{ margin: "0 1rem", fontSize: "1.5rem" }}>
+          Found {searchResult.length} matches for: {query}
+        </p>
+      )}
       {!!searchResult.length && (
         <RecipeList recipes={searchResult} lastItem={true} />
       )}
