@@ -1,4 +1,4 @@
-import { MongoClient } from "mongodb";
+import { Db, MongoClient } from "mongodb";
 import { Recipe } from "../pages/add-recipe";
 
 if (!process.env.MONGODB_URI) {
@@ -29,10 +29,15 @@ if (process.env.NODE_ENV === "development") {
 // separate module, the client can be shared across functions.
 export default clientPromise;
 
+let db: Db | undefined;
+
 export async function getDb() {
-  const client = await clientPromise;
-  const db = client.db();
-  return db;
+  if (db) return db;
+  else {
+    const client = await clientPromise;
+    db = client.db();
+    return db;
+  }
 }
 
 export async function getRecipeCollection() {

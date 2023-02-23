@@ -35,6 +35,7 @@ function NavBar() {
           <span
             className={styles.menu}
             onClick={() => setShowNavMenu(!showNavMenu)}
+            aria-label="menu"
           >
             {showNavMenu ? <MdClose /> : <MdOutlineMenu />}
           </span>

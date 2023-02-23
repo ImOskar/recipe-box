@@ -4,7 +4,7 @@ import { getRecipeCollection } from "./mongodb";
 export const getRecipeServerSide = async (id: string) => {
   const recipeCollection = await getRecipeCollection();
   const result = await recipeCollection.findOne({ _id: new ObjectId(id) });
-  let recipe = { id: result?._id.toString(), ...result };
+  let recipe = { ...result, id: result?._id.toString() };
   delete recipe._id;
   return recipe;
 };
