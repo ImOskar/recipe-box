@@ -28,7 +28,7 @@ function RecipeDetailPage({ recipe }: DetailProps) {
       let result = await res.json();
     } catch (error) {}
     setLoading(false);
-    router.push("/");
+    router.push("/my-recipes/all");
   };
 
   const handleLike = async (id: string) => {

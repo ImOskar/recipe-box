@@ -29,7 +29,7 @@ function EditRecipe({ recipe }: EditProps) {
       let result = await res.json();
     } catch (error) {}
     setUpdatingRecipe(false);
-    router.push(`/my-recipes`);
+    router.push(`/my-recipes/all`);
   };
 
   return (
