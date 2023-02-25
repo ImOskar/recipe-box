@@ -1,28 +1,38 @@
-.modalwrapper {
+.overlay {
   position: fixed;
-  left: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  top: 0;
   right: 0;
   bottom: 0;
-  background: #ffff;
-  color: #000000;
-  padding: 1.5rem;
-  text-align: center;
+  left: 0;
+}
+
+.modal {
+  background-color: #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 2rem;
+  width: min(600px, 90%);
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .header {
   font-size: var(--xl);
   margin-bottom: 2rem;
+  color: rgb(30, 30, 30);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3rem;
 }
 
 .buttons {
   display: flex;
-  width: 50%;
+  width: 100%;
   margin: 0 auto;
-  justify-content: space-evenly;
-}
-
-@media only screen and (max-width: 700px) {
-  .buttons {
-    width: 100%;
-  }
+  justify-content: space-between;
 }

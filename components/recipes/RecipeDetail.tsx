@@ -1,10 +1,9 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { useSession } from "next-auth/react";
 import { Recipe } from "../../pages/add-recipe";
 import Button from "../ui/Button";
-import Modal from "../ui/Modal";
 import styles from "./RecipeDetail.module.css";
 import fallbackImage from "../../public/pexels-ella-olsson-1640774.jpg";
 import Link from "next/link";
@@ -15,19 +14,18 @@ import Tag from "../ui/Tag";
 
 type DetailProps = {
   recipe: Recipe;
-  handleDelete: () => Promise<void>;
+  handleModal: Dispatch<SetStateAction<boolean>>;
   handleLike: (id: string) => void;
   handleCategory: (id: string) => void;
 };
 
 function RecipeDetail({
   recipe,
-  handleDelete,
+  handleModal,
   handleLike,
   handleCategory,
 }: DetailProps) {
   const { data: session } = useSession();
-  const [showModal, setShowModal] = useState(false);
   const [likes, setLikes] = useState(recipe.likes);
   const router = useRouter();
 
@@ -57,25 +55,32 @@ function RecipeDetail({
     else return `${likes.length} likes`;
   };
 
+  const hasCategories = (): boolean => {
+    return (
+      typeof recipe.recipeCategories !== "undefined" &&
+      recipe.recipeCategories.length >= 1 &&
+      recipe.recipeCategories[0] !== ""
+    );
+  };
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.recipeheader}>
         <h1 lang="en">{recipe.title}</h1>
         <span></span>
         {recipe.author && <h3>By: {recipe.author}</h3>}
-        <div
-          className={recipe.recipeCategories?.length! >= 1 ? styles.tags : ""}
-        >
-          {recipe.recipeCategories?.map((cat) => {
-            return (
-              <Tag
-                key={cat}
-                item={cat}
-                handleClick={() => handleCategory(cat)}
-                selectable
-              />
-            );
-          })}
+        <div className={hasCategories() ? styles.tags : ""}>
+          {hasCategories() &&
+            recipe.recipeCategories?.map((cat) => {
+              return (
+                <Tag
+                  key={cat}
+                  item={cat}
+                  handleClick={() => handleCategory(cat)}
+                  selectable
+                />
+              );
+            })}
         </div>
       </div>
       <span className={styles.image}>
@@ -160,14 +165,11 @@ function RecipeDetail({
             </Button>
             <Button
               addStyle={["med", "alert"]}
-              onClick={() => setShowModal(true)}
+              onClick={() => handleModal(true)}
             >
               <MdOutlineDeleteForever />
               Delete recipe
             </Button>
-            {showModal && (
-              <Modal deleteHandler={handleDelete} hideModal={setShowModal} />
-            )}
           </span>
         )}
       </div>

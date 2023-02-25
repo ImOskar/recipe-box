@@ -14,7 +14,9 @@ export default async function handler(
     case "POST":
       try {
         let result = await recipeCollection.insertOne(data);
-        res.status(201).json({ message: "Recipe inserted", ...result });
+        res
+          .status(201)
+          .json({ message: "Recipe added successfully", ...result });
       } catch (error) {}
       break;
     case "PUT":
@@ -23,7 +25,7 @@ export default async function handler(
           { _id: new ObjectId(data.id) },
           data
         );
-        res.status(201).json({ message: "Recipe replaced", ...result });
+        res.status(200).json({ message: "Recipe replaced", ...result });
       } catch (error) {}
       break;
     case "GET":
@@ -83,10 +85,10 @@ const getFilters = (
 ) => {
   let filter = [];
   if (lastValue) {
-    filter.push({ _id: { $lt: new ObjectId(lastValue?.toString()) } });
+    filter.push({ _id: { $lt: new ObjectId(lastValue) } });
   }
-  if (user) filter.push({ [user as string]: id });
-  if (key) filter.push({ [key as string]: { $regex: new RegExp(value, "i") } });
+  if (user) filter.push({ [user]: id });
+  if (key) filter.push({ [key]: { $regex: new RegExp(value, "i") } });
   if (!filter.length) return {};
   else if (filter.length === 1) return filter[0];
   else return { $and: filter };

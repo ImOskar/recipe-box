@@ -38,12 +38,15 @@ function RecipeForm({
   const handleSubmit = (e: FormEvent<Element>) => {
     e.preventDefault();
     handleAddRecipe(recipe);
+    setRecipe(INITIAL_FORM_VALUES);
   };
 
   const stringToArray = (string: string) => string.split("\n");
 
   const handleSelectCategory = (categoryName: string) => {
-    let categories = recipe.recipeCategories as string[];
+    let categories: string[] = [];
+    if (typeof recipe.recipeCategories !== "undefined")
+      categories = recipe.recipeCategories as string[];
     if (categories.includes(categoryName))
       setRecipe({
         ...recipe,

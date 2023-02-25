@@ -6,6 +6,8 @@ import { useState } from "react";
 import { unstable_getServerSession } from "next-auth";
 import { options } from "../api/auth/[...nextauth]";
 import Head from "next/head";
+import Modal from "../../components/ui/Modal";
+import Button from "../../components/ui/Button";
 
 export type Recipe = {
   id?: string;
@@ -31,6 +33,8 @@ function AddRecipePage() {
   const { data: session } = useSession();
   const router = useRouter();
   const [savingRecipe, setSavingRecipe] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [modalTitle, setModalTitle] = useState("");
 
   const handleAddRecipe = async (recipeData: Recipe) => {
     recipeData.userId = session?.user.id;
@@ -44,9 +48,17 @@ function AddRecipePage() {
         },
       });
       let result = await res.json();
-    } catch (error) {}
+      setModalTitle(`${result.message}.`);
+    } catch (error) {
+      setModalTitle("Couldn't save recipe.");
+    }
     setSavingRecipe(false);
-    router.push("/my-recipes");
+    setShowModal(true);
+  };
+
+  const handleModalClick = (path: string) => {
+    setShowModal(false);
+    router.push(path);
   };
 
   return (
@@ -56,6 +68,22 @@ function AddRecipePage() {
         <meta name="explore" content="Save all your recipes in one place!" />
       </Head>
       <RecipeForm handleAddRecipe={handleAddRecipe} save={savingRecipe} />
+      {showModal && (
+        <Modal hideModal={setShowModal} title={modalTitle}>
+          <Button
+            addStyle={["med", "orange"]}
+            onClick={() => handleModalClick("/my-recipes/all")}
+          >
+            My recipes
+          </Button>
+          <Button
+            addStyle="med"
+            onClick={() => handleModalClick("/add-recipe")}
+          >
+            Add new recipe
+          </Button>
+        </Modal>
+      )}
     </section>
   );
 }

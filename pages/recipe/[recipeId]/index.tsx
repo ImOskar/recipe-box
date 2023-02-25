@@ -6,6 +6,8 @@ import { useState } from "react";
 import Spinner from "../../../components/ui/Spinner";
 import Head from "next/head";
 import { getRecipeServerSide } from "../../../lib/utils";
+import Modal from "../../../components/ui/Modal";
+import Button from "../../../components/ui/Button";
 
 type DetailProps = {
   recipe: Recipe;
@@ -13,6 +15,7 @@ type DetailProps = {
 
 function RecipeDetailPage({ recipe }: DetailProps) {
   const [loading, setLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const router = useRouter();
 
   const handleDelete = async () => {
@@ -27,8 +30,9 @@ function RecipeDetailPage({ recipe }: DetailProps) {
       });
       let result = await res.json();
     } catch (error) {}
-    setLoading(false);
+    setShowModal(false);
     router.push("/my-recipes/all");
+    setLoading(false);
   };
 
   const handleLike = async (id: string) => {
@@ -62,10 +66,23 @@ function RecipeDetailPage({ recipe }: DetailProps) {
       {loading && <Spinner style="spinnerlrg" />}
       <RecipeDetail
         recipe={recipe}
-        handleDelete={handleDelete}
+        handleModal={setShowModal}
         handleLike={handleLike}
         handleCategory={handleCategory}
       />
+      {showModal && (
+        <Modal
+          hideModal={setShowModal}
+          title="Are you sure you want to delete this recipe?"
+        >
+          <Button addStyle={"med"} onClick={() => setShowModal(false)}>
+            Cancel
+          </Button>
+          <Button addStyle={["med", "alert"]} onClick={handleDelete}>
+            Delete
+          </Button>
+        </Modal>
+      )}
     </section>
   );
 }
