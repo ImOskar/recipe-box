@@ -40,14 +40,8 @@ export async function getDb() {
   }
 }
 
-export async function getRecipeCollection() {
+export async function getCollection(name: string) {
   const db = await getDb();
-  const recipeCollection = db.collection<Recipe>("recipes");
-  return recipeCollection;
-}
-
-export async function getUserCollection() {
-  const db = await getDb();
-  const recipeCollection = db.collection("users");
-  return recipeCollection;
+  const collection = db.collection(name);
+  return collection;
 }

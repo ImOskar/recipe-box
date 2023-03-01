@@ -1,0 +1,31 @@
+.commentlist {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 0, 3rem;
+  width: min(850px, 90%);
+  margin: 0 auto;
+}
+
+.commentlist hr {
+  width: 100%;
+  margin: 1rem 0;
+}
+
+.title {
+  font-size: var(--l);
+}
+
+@media only screen and (max-width: 600px) {
+  .commentlist {
+    padding: 0;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  .commentlist {
+    margin-top: 3rem;
+  }
+}

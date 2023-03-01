@@ -1,0 +1,39 @@
+.comment {
+  display: flex;
+  width: 100%;
+}
+
+.commentcontent {
+  margin-left: 0.5rem;
+  width: 100%;
+}
+
+.avatar {
+  font-size: 2rem;
+}
+
+.nameanddate {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.5rem;
+}
+
+.nameanddate p {
+  font-size: var(--l);
+  font-weight: 500;
+}
+
+.post {
+  display: flex;
+  flex-direction: column;
+}
+
+.post button {
+  align-self: end;
+}
+
+.reply {
+  width: 95%;
+  align-self: end;
+}

@@ -1,4 +1,4 @@
-import { getUserCollection } from "../../../lib/mongodb";
+import { getCollection } from "../../../lib/mongodb";
 import bcrypt from "bcrypt";
 import type { NextApiRequest, NextApiResponse } from "next";
 
@@ -7,7 +7,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method === "POST") {
-    const userCollection = await getUserCollection();
+    const userCollection = await getCollection("users");
     let { username, email, password } = req.body;
 
     const userExists = await userCollection.findOne({ email: email });

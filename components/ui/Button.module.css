@@ -59,6 +59,19 @@
   border-radius: 0;
 }
 
+.reply {
+  align-self: flex-end;
+  height: auto;
+  width: auto;
+  background-color: #fff;
+  color: var(--grey);
+}
+
+.reply:hover {
+  background-color: #fff;
+  color: rgb(0, 0, 0);
+}
+
 .google {
   display: flex;
   justify-content: space-between;
@@ -106,8 +119,8 @@
 }
 
 .sm {
-  height: 50px;
-  width: 50px;
+  height: 45px;
+  width: 75px;
 }
 
 .med {

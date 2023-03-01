@@ -8,6 +8,7 @@ import Head from "next/head";
 import { getRecipeServerSide } from "../../../lib/utils";
 import Modal from "../../../components/ui/Modal";
 import Button from "../../../components/ui/Button";
+import CommentList from "../../../components/comments/CommentList";
 
 type DetailProps = {
   recipe: Recipe;
@@ -70,6 +71,7 @@ function RecipeDetailPage({ recipe }: DetailProps) {
         handleLike={handleLike}
         handleCategory={handleCategory}
       />
+      <CommentList recipeId={recipe.id!} />
       {showModal && (
         <Modal
           hideModal={setShowModal}

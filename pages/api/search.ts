@@ -1,4 +1,4 @@
-import { getRecipeCollection } from "../../lib/mongodb";
+import { getCollection } from "../../lib/mongodb";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { Recipe } from "../add-recipe";
 
@@ -6,7 +6,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const recipeCollection = await getRecipeCollection();
+  const recipeCollection = await getCollection("recipes");
   let query = req.body;
 
   const pipeline = [

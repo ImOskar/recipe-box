@@ -1,16 +1,17 @@
 import { ObjectId } from "mongodb";
-import { getRecipeCollection } from "./mongodb";
+import { Recipe } from "../pages/add-recipe";
+import { getCollection } from "./mongodb";
 
 export const getRecipeServerSide = async (id: string) => {
-  const recipeCollection = await getRecipeCollection();
+  const recipeCollection = await getCollection("recipes");
   const result = await recipeCollection.findOne({ _id: new ObjectId(id) });
   let recipe = { ...result, id: result?._id.toString() };
   delete recipe._id;
-  return recipe;
+  return recipe as Recipe;
 };
 
 export const getRecipesServerSide = async (query: Object) => {
-  const recipeCollection = await getRecipeCollection();
+  const recipeCollection = await getCollection("recipes");
   const recipes = await recipeCollection
     .find(query)
     .sort({ _id: -1 })

@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
-import clientPromise, { getUserCollection } from "../../../lib/mongodb";
+import clientPromise, { getCollection } from "../../../lib/mongodb";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export const options: NextAuthOptions = {
@@ -40,7 +40,7 @@ export const options: NextAuthOptions = {
       async authorize(credentials, req) {
         const password = credentials?.password!;
         const email = credentials?.email!;
-        const userCollection = await getUserCollection();
+        const userCollection = await getCollection("users");
         const user = await userCollection.findOne({ email: email });
         if (!user) {
           throw new Error("You haven't registered yet");

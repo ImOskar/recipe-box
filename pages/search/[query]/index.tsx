@@ -39,8 +39,9 @@ function Search() {
       </Head>
       {loading && <Spinner style={"spinnerlrg"} />}
       {!loading && (
-        <p style={{ margin: "0 1rem", fontSize: "1.5rem" }}>
-          Found {searchResult.length} matches for: {query}
+        <p style={{ textAlign: "center", fontSize: "1.5rem" }}>
+          Found {searchResult.length}{" "}
+          {searchResult.length === 1 ? "match" : "matches"} for: {query}
         </p>
       )}
       {!!searchResult.length && (
